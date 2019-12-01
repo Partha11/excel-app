@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "181354790241",
+    "firebase_url": "https://project-excel-e6f53.firebaseio.com",
+    "project_id": "project-excel-e6f53",
+    "storage_bucket": "project-excel-e6f53.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:181354790241:android:2491c776c3867a31a8d920",
+        "android_client_info": {
+          "package_name": "com.tiptoptips.xl"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "181354790241-en1o5js8qgq56o9b9po6964i46lb2mfo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzPKSt4zkcglbdLRlWn6rX00pjKYGX6rc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "181354790241-en1o5js8qgq56o9b9po6964i46lb2mfo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
