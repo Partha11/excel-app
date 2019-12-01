@@ -25,4 +25,30 @@ public class SharedPrefs {
 
         return preferences.getBoolean(Constants.PREF_INSTALLED, false);
     }
+
+    public void setUid(String uid) {
+
+        editor = preferences.edit();
+
+        editor.putString(Constants.PREF_UID, uid);
+        editor.apply();
+    }
+
+    public String getUid() {
+
+        return preferences.getString(Constants.PREF_UID, "");
+    }
+
+    public void setUserEmail(String email) {
+
+        editor = preferences.edit();
+
+        editor.putString(Constants.PREF_USER_EMAIL, email);
+        editor.apply();
+    }
+
+    public String getUserEmail() {
+
+        return preferences.getString(Constants.PREF_USER_EMAIL, "");
+    }
 }

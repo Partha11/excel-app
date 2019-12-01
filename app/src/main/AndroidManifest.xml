@@ -10,10 +10,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".view.splash.LoginActivity" />
+        tools:ignore="GoogleAppIndexingWarning"
+        android:fullBackupContent="false">
+        <activity android:name=".view.login.LoginActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".view.dashboard.DashboardActivity" />
-        <activity android:name=".view.SplashActivity"
+        <activity android:name=".view.splash.SplashActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

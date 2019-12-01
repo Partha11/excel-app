@@ -1,4 +1,4 @@
-package com.tiptoptips.xl.view;
+package com.tiptoptips.xl.view.splash;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,7 +9,7 @@ import android.os.Handler;
 import com.tiptoptips.xl.R;
 import com.tiptoptips.xl.utility.SharedPrefs;
 import com.tiptoptips.xl.view.dashboard.DashboardActivity;
-import com.tiptoptips.xl.view.splash.LoginActivity;
+import com.tiptoptips.xl.view.login.LoginActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
