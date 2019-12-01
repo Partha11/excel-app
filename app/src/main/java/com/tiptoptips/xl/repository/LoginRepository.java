@@ -1,5 +1,7 @@
 package com.tiptoptips.xl.repository;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -92,11 +94,17 @@ public class LoginRepository {
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
 
-                    if (task.isSuccessful() && auth.getCurrentUser() != null) {
+                    if (task.isSuccessful()) {
+
+                        FirebaseUser user = auth.getCurrentUser();
 
                         status.setSuccess(true);
-                        status.setUserId(auth.getCurrentUser().getUid());
                         status.setErrorMessage("");
+
+                        if (user != null) {
+
+                            status.setUserId(user.getUid());
+                        }
 
                     } else {
 
@@ -104,6 +112,8 @@ public class LoginRepository {
                         status.setUserId("");
                         status.setErrorMessage("Something went wrong");
                     }
+
+                    isSuccess.setValue(status);
 
                 }).addOnFailureListener(e -> {
 

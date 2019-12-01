@@ -3,6 +3,7 @@ package com.tiptoptips.xl.view.login;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -59,6 +60,8 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private SharedPrefs prefs;
 
+    private boolean doubleBackPressed;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -112,6 +115,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                     prefs.setUid(status.getUserId());
                                     prefs.setUserEmail(loginEmail.getText().toString().trim());
+                                    prefs.setInstalled(true);
                                     startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
                                     finish();
 
@@ -171,6 +175,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                     prefs.setUid(status.getUserId());
                                     prefs.setUserEmail(registerEmail.getText().toString().trim());
+                                    prefs.setInstalled(true);
                                     startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
                                     finish();
 
@@ -191,5 +196,19 @@ public class LoginActivity extends AppCompatActivity {
                 guideToRegister.setVisibility(View.VISIBLE);
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (doubleBackPressed) {
+
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackPressed = true;
+        Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(() -> doubleBackPressed = false, 2000);
     }
 }

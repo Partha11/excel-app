@@ -13,11 +13,11 @@ public class SharedPrefs {
         preferences = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
     }
 
-    public void setInstalled() {
+    public void setInstalled(boolean value) {
 
         editor = preferences.edit();
 
-        editor.putBoolean(Constants.PREF_INSTALLED, true);
+        editor.putBoolean(Constants.PREF_INSTALLED, value);
         editor.apply();
     }
 
