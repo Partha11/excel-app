@@ -51,4 +51,17 @@ public class SharedPrefs {
 
         return preferences.getString(Constants.PREF_USER_EMAIL, "");
     }
+
+    public void setFirstLaunch(boolean value) {
+
+        editor = preferences.edit();
+
+        editor.putBoolean(Constants.PREF_FIRST_LAUNCH, value);
+        editor.apply();
+    }
+
+    public boolean getFirstLaunch() {
+
+        return preferences.getBoolean(Constants.PREF_FIRST_LAUNCH, true);
+    }
 }

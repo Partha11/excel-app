@@ -8,8 +8,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.tiptoptips.xl.model.Status;
 import com.tiptoptips.xl.utility.Constants;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginRepository {
 
@@ -97,13 +102,19 @@ public class LoginRepository {
                     if (task.isSuccessful()) {
 
                         FirebaseUser user = auth.getCurrentUser();
+                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
 
                         status.setSuccess(true);
                         status.setErrorMessage("");
 
                         if (user != null) {
 
+                            Map<String, String> data = new HashMap<>();
+
+                            data.put(Constants.USER_EMAIL, email);
+
                             status.setUserId(user.getUid());
+                            reference.child(user.getUid()).setValue(data);
                         }
 
                     } else {
