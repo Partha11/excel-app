@@ -6,6 +6,6 @@ Features-
 * Dynamic cell type (Image/Text/Formula etc.)
 * Store data as json
 * Online data sync
-* Supports caching and pagination
-<br/><br/>
+* Supports caching and pagination<br/><br/>
+
 This application is created by following android architectural pattern (MVVM)
