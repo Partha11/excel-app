@@ -16,13 +16,15 @@ public interface Constants {
     String DATABASE_NAME = "user_files";
     int DATABASE_VERSION = 1;
     String FILES_TABLE = "files";
+    String FILE_INFO = "file_info";
     String FIELD_FILE_ID = "file_id";
-    String FIELD_FILENAME = "file_name";
+    String FIELD_FILE_NAME = "file_name";
     String FIELD_CREATION_DATE = "creation_date";
     String FIELD_FILE_URL = "file_url";
     String FIELD_SHARED_WITH = "shared_with";
+    String FIELD_FILE_BODY = "file_body";
 
-    String SELECTED_ITEM_ID = "selected_id";
+    String SELECTED_ITEM = "selected_item";
 
     int MOOD_CELL_TYPE = 1;
     int GENDER_CELL_TYPE = 2;

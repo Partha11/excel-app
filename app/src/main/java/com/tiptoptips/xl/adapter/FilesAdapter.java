@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.tiptoptips.xl.R;
 import com.tiptoptips.xl.listener.OnItemClickedListener;
+import com.tiptoptips.xl.model.DataFile;
 import com.tiptoptips.xl.model.UserFile;
 
 import java.util.List;
@@ -23,11 +24,11 @@ import butterknife.OnClick;
 
 public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.ViewHolder> {
 
-    private List<UserFile> userFiles;
+    private List<DataFile> userFiles;
     private Context context;
     private OnItemClickedListener listener;
 
-    public FilesAdapter(Context context, List<UserFile> userFiles) {
+    public FilesAdapter(Context context, List<DataFile> userFiles) {
 
         this.context = context;
         this.userFiles = userFiles;
@@ -53,7 +54,16 @@ public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.ViewHolder> 
         return userFiles == null ? 0 : userFiles.size();
     }
 
-    public void setFileList(List<UserFile> userFileList) {
+    public void addFile(DataFile file) {
+
+        if (userFiles != null) {
+
+            userFiles.add(file);
+            notifyDataSetChanged();
+        }
+    }
+
+    public void setFileList(List<DataFile> userFileList) {
 
         this.userFiles = userFileList;
         notifyDataSetChanged();
@@ -84,7 +94,7 @@ public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.ViewHolder> 
         @OnClick(R.id.note_root_layout)
         public void onViewClicked() {
 
-            listener.onItemClick(userFiles.get(getAdapterPosition()).getId());
+            listener.onItemClick(userFiles.get(getAdapterPosition()));
         }
     }
 }

@@ -2,7 +2,6 @@ package com.tiptoptips.xl.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,18 +15,17 @@ import com.tiptoptips.xl.model.RowHeader;
 import com.tiptoptips.xl.utility.Constants;
 import com.tiptoptips.xl.viewholder.CellViewHolder;
 import com.tiptoptips.xl.viewholder.ColumnHeaderViewHolder;
-import com.tiptoptips.xl.viewholder.GenderCellViewHolder;
 import com.tiptoptips.xl.viewholder.ImageCellViewHolder;
 import com.tiptoptips.xl.viewholder.RowHeaderViewHolder;
-import com.tiptoptips.xl.viewmodel.TableViewModel;
 
-import static com.tiptoptips.xl.utility.Constants.GENDER_CELL_TYPE;
-import static com.tiptoptips.xl.utility.Constants.MOOD_CELL_TYPE;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TableAdapter extends AbstractTableAdapter<ColumnHeader, RowHeader, Cell> {
 
     private Context context;
-    private TableViewModel tableViewModel;
+
+    private List<Integer> columnTypeList;
 
     public TableAdapter(Context context) {
 
@@ -35,9 +33,14 @@ public class TableAdapter extends AbstractTableAdapter<ColumnHeader, RowHeader, 
         this.context = context;
     }
 
-    public void setTableModel(TableViewModel tableViewModel) {
+    public void setColumnType(List<Integer> columnTypeList) {
 
-        this.tableViewModel = tableViewModel;
+        if (this.columnTypeList != null) {
+
+            this.columnTypeList.clear();
+        }
+
+        this.columnTypeList = new ArrayList<>(columnTypeList);
     }
 
     @Override
@@ -55,7 +58,7 @@ public class TableAdapter extends AbstractTableAdapter<ColumnHeader, RowHeader, 
     @Override
     public int getCellItemViewType(int position) {
 
-        if (position == Constants.IMAGE_COLUMN) {
+        if (columnTypeList.get(position) == Constants.IMAGE_COLUMN) {
 
             return Constants.IMAGE_COLUMN;
         }
@@ -87,7 +90,8 @@ public class TableAdapter extends AbstractTableAdapter<ColumnHeader, RowHeader, 
         if (holder.getItemViewType() == Constants.IMAGE_COLUMN) {
 
             ImageCellViewHolder moodViewHolder = (ImageCellViewHolder) holder;
-            moodViewHolder.cell_image.setImageResource(tableViewModel.getDrawable((int) cell.getData(), false));
+            moodViewHolder.setData(null);
+//            moodViewHolder.cell_image.setImageResource(tableViewModel.getDrawable((int) cell.getData(), false));
 
         } else {
 

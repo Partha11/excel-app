@@ -7,11 +7,12 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
+import com.tiptoptips.xl.model.SingleFile;
 import com.tiptoptips.xl.model.UserFile;
 import com.tiptoptips.xl.utility.Constants;
 import com.tiptoptips.xl.utility.Converter;
 
-@Database(entities = {UserFile.class}, version = Constants.DATABASE_VERSION, exportSchema = false)
+@Database(entities = {UserFile.class, SingleFile.class}, version = Constants.DATABASE_VERSION, exportSchema = false)
 @TypeConverters({Converter.class})
 public abstract class FileDatabase extends RoomDatabase {
 

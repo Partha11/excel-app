@@ -1,18 +1,25 @@
 package com.tiptoptips.xl.view.splash;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.tiptoptips.xl.R;
 import com.tiptoptips.xl.utility.SharedPrefs;
 import com.tiptoptips.xl.view.dashboard.DashboardActivity;
 import com.tiptoptips.xl.view.login.LoginActivity;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class SplashActivity extends AppCompatActivity {
+
+    @BindView(R.id.splash_text)
+    AppCompatTextView splashText;
 
     private boolean doubleBackPressed;
 
@@ -21,6 +28,10 @@ public class SplashActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        ButterKnife.bind(this);
+
+        splashText.setText(getResources().getString(getResources().getIdentifier("hello",
+                "string", getPackageName())));
 
         SharedPrefs prefs = new SharedPrefs(this);
         new Handler().postDelayed(() -> {

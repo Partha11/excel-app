@@ -41,17 +41,20 @@ public class ColumnHeaderViewHolder extends AbstractSorterViewHolder {
 
         View.OnClickListener mSortButtonClickListener = view -> {
 
-            if (getSortState() == SortState.ASCENDING) {
+            if (tableView != null) {
 
-                tableView.sortColumn(getAdapterPosition(), SortState.DESCENDING);
+                if (getSortState() == SortState.ASCENDING) {
 
-            } else if (getSortState() == SortState.DESCENDING) {
+                    tableView.sortColumn(getAdapterPosition(), SortState.DESCENDING);
 
-                tableView.sortColumn(getAdapterPosition(), SortState.ASCENDING);
+                } else if (getSortState() == SortState.DESCENDING) {
 
-            } else {
+                    tableView.sortColumn(getAdapterPosition(), SortState.ASCENDING);
 
-                tableView.sortColumn(getAdapterPosition(), SortState.DESCENDING);
+                } else {
+
+                    tableView.sortColumn(getAdapterPosition(), SortState.DESCENDING);
+                }
             }
 
         };
@@ -82,7 +85,7 @@ public class ColumnHeaderViewHolder extends AbstractSorterViewHolder {
         controlSortState(sortState);
 
         Log.e(LOG_TAG, " - onSortingStatusChanged : x:  " + getAdapterPosition() + " old state "
-                + getSortState() + " current state : " + sortState + " visiblity: " +
+                + getSortState() + " current state : " + sortState + " visibility: " +
                 column_header_sortButton.getVisibility());
 
         column_header_textview.requestLayout();

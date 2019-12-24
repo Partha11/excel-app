@@ -1,20 +1,26 @@
 package com.tiptoptips.xl.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.tiptoptips.xl.utility.Constants;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Entity(tableName = Constants.FILES_TABLE)
 public class UserFile {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
+    @NonNull
     @ColumnInfo(name = Constants.FIELD_FILE_ID)
-    private int id;
-    @ColumnInfo(name = Constants.FIELD_FILENAME)
+    private String id = "";
+    @ColumnInfo(name = Constants.FIELD_FILE_NAME)
     private String fileName;
     @ColumnInfo(name = Constants.FIELD_CREATION_DATE)
     private String creationDate;
@@ -22,12 +28,17 @@ public class UserFile {
     private String fileUrl;
     @ColumnInfo(name = Constants.FIELD_SHARED_WITH)
     private HashMap<String, String> sharedWith;
+    @ColumnInfo(name = Constants.FIELD_FILE_BODY)
+    private List<HashMap<String, String>> convertedFileBody;
+    @Ignore
+    private HashMap<String, HashMap<Long, HashMap<String, String>>> fileBody;
 
-    public int getId() {
+    @NonNull
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 
@@ -61,5 +72,35 @@ public class UserFile {
 
     public void setSharedWith(HashMap<String, String> sharedWith) {
         this.sharedWith = sharedWith;
+    }
+
+
+    public HashMap<String, HashMap<Long, HashMap<String, String>>> getFileBody() {
+        return fileBody;
+    }
+
+    public void setFileBody(HashMap<String, HashMap<Long, HashMap<String, String>>> fileBody) {
+
+        this.fileBody = fileBody;
+
+        List<HashMap<String, String>> data = new ArrayList<>();
+
+        for (Map.Entry<String, HashMap<Long, HashMap<String, String>>> entry : fileBody.entrySet()) {
+
+            for (Map.Entry<Long, HashMap<String, String>> node : entry.getValue().entrySet()) {
+
+                data.add(node.getValue());
+            }
+        }
+
+        setConvertedFileBody(data);
+    }
+
+    public List<HashMap<String, String>> getConvertedFileBody() {
+        return convertedFileBody;
+    }
+
+    public void setConvertedFileBody(List<HashMap<String, String>> convertedFileBody) {
+        this.convertedFileBody = convertedFileBody;
     }
 }

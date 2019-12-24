@@ -2,6 +2,8 @@
 
     <string name="app_name">Excel</string>
 
+    <string name="hello">Hello World</string>
+
     <string name="welcome">Welcome to Excel</string>
     <string name="sub_heading">My Custom Heading</string>
     <string name="user_email">Email</string>

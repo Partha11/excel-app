@@ -29,14 +29,14 @@ import com.evrencoskun.tableview.listener.ITableViewListener;
 public class TableViewListener implements ITableViewListener {
 
     @NonNull
-    private Context mContext;
+    private Context context;
     @NonNull
-    private TableView mTableView;
+    private TableView tableView;
 
     public TableViewListener(@NonNull TableView tableView) {
 
-        this.mContext = tableView.getContext();
-        this.mTableView = tableView;
+        this.context = tableView.getContext();
+        this.tableView = tableView;
     }
 
     @Override
@@ -62,7 +62,7 @@ public class TableViewListener implements ITableViewListener {
 
 //        if (columnHeaderView instanceof ColumnHeaderViewHolder) {
 //
-//            ColumnHeaderLongPressPopup popup = new ColumnHeaderLongPressPopup((ColumnHeaderViewHolder) columnHeaderView, mTableView);
+//            ColumnHeaderLongPressPopup popup = new ColumnHeaderLongPressPopup((ColumnHeaderViewHolder) columnHeaderView, tableView);
 //            popup.show();
 //        }
     }
@@ -76,13 +76,13 @@ public class TableViewListener implements ITableViewListener {
     @Override
     public void onRowHeaderLongPressed(@NonNull RecyclerView.ViewHolder rowHeaderView, int row) {
 
-//        RowHeaderLongPressPopup popup = new RowHeaderLongPressPopup(rowHeaderView, mTableView);
+//        RowHeaderLongPressPopup popup = new RowHeaderLongPressPopup(rowHeaderView, tableView);
 //        popup.show();
     }
 
 
     private void showToast(String message) {
 
-        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 }

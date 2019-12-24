@@ -1,6 +1,7 @@
 package com.tiptoptips.xl.repository;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
@@ -11,7 +12,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tiptoptips.xl.database.FileDao;
+import com.tiptoptips.xl.model.DataFile;
 import com.tiptoptips.xl.model.UserFile;
+import com.tiptoptips.xl.utility.Converter;
 import com.tiptoptips.xl.utility.SharedPrefs;
 
 import java.util.ArrayList;
@@ -37,7 +40,6 @@ public class DashboardRepository {
 
             DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users")
                     .child(uid);
-
             reference.child("userFiles").addListenerForSingleValueEvent(new ValueEventListener() {
 
                 @Override
@@ -50,6 +52,9 @@ public class DashboardRepository {
                         if (file != null) {
 
                             files.add(file);
+                            Log.d("Json", Converter.fromListToString(file.getConvertedFileBody()));
+                            Log.d("Json", dataSnapshot.toString());
+                            Log.d("Json", file.getConvertedFileBody().toString());
                         }
                     }
 
@@ -87,9 +92,39 @@ public class DashboardRepository {
 
         return fileList;
     }
+
+    public MutableLiveData<String> insertFile(String uid, DataFile file) {
+
+        MutableLiveData<String> data = new MutableLiveData<>();
+        DatabaseReference reference  = FirebaseDatabase.getInstance().getReference().child("users")
+                .child(uid).child("userFiles");
+        String key = FirebaseDatabase.getInstance().getReference().push().getKey();
+
+        if (key != null) {
+
+            file.setFileKey(key);
+            reference.child(key).setValue(file).addOnCompleteListener(task -> {
+
+                if (task.isSuccessful()) {
+
+                    data.setValue(key);
+
+                } else {
+
+                    data.setValue(null);
+                }
+            });
+
+        } else {
+
+            data.setValue(null);
+        }
+
+        return data;
+    }
 }
 
-class InsertFiles extends AsyncTask<UserFile, Void, Void> {
+class InsertFiles extends AsyncTask<UserFile, Void, Boolean> {
 
     private FileDao fileDao;
 
@@ -99,10 +134,10 @@ class InsertFiles extends AsyncTask<UserFile, Void, Void> {
     }
 
     @Override
-    protected Void doInBackground(UserFile... userFiles) {
+    protected Boolean doInBackground(UserFile... userFiles) {
 
         fileDao.insertFiles(userFiles);
-        return null;
+        return true;
     }
 }
 
