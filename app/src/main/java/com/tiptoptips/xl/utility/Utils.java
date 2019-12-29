@@ -1,93 +1,64 @@
 package com.tiptoptips.xl.utility;
 
+import android.content.Context;
 import android.text.TextUtils;
 
-import com.tiptoptips.xl.model.Cell;
-import com.tiptoptips.xl.model.ColumnHeader;
-import com.tiptoptips.xl.model.RowHeader;
-import com.tiptoptips.xl.model.TableModel;
+import com.tiptoptips.xl.R;
+import com.tiptoptips.xl.model.Template;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Utils {
+
+    private List<String> columnTypes;
+
+    public Utils(Context context) {
+
+        columnTypes = Arrays.asList(context.getResources().getStringArray(R.array.column_options));
+    }
+
+    public String getColumnName(int position) {
+
+        return columnTypes.get(position);
+    }
 
     public static boolean isValidEmail(String email) {
 
         return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    public static TableModel parseJson(String json) {
+    public static Template getTemplate(int type) {
 
-        TableModel model = new TableModel();
-        HashMap<String, HashMap<Long, HashMap<String, String>>> data = Converter.fromStringToMap(json);
-        List<ColumnHeader> columnList = new ArrayList<>();
-        List<RowHeader> rowList = new ArrayList<>();
-        List<List<Cell>> cellList = new ArrayList<>();
-        List<Integer> columnTypeList = new ArrayList<>();
+        switch (type) {
 
-        int c = 0;
-
-        for (Map.Entry<String, HashMap<Long, HashMap<String, String>>> d : data.entrySet()) {
-
-            for (Map.Entry<Long, HashMap<String, String>> e : d.getValue().entrySet()) {
-
-                List<Cell> cells = new ArrayList<>();
-                int j = 0;
-
-                for (Map.Entry<String, String> f : e.getValue().entrySet()) {
-
-                    if (c == 0) {
-
-                        columnList.add(new ColumnHeader(String.valueOf(j + 1), String.valueOf(f.getKey())));
-
-                        if (f.getValue().contains("http://") || f.getValue().contains("https://")) {
-
-                            columnTypeList.add(Constants.IMAGE_COLUMN);
-
-                        } else {
-
-                            columnTypeList.add(Constants.TEXT_COLUMN);
-                        }
-                    }
-
-                    if (j == 0) {
-
-                        rowList.add(new RowHeader(String.valueOf(c + 1), String.valueOf(c + 1)));
-                    }
-
-
-                    cells.add(new Cell(String.valueOf(j + 1), f.getValue()));
-                    j++;
-                }
-
-                cellList.add(cells);
-                c++;
-            }
+            case Constants.TEMPLATE_STANDARD:
+                return getStandardFileFormat();
+            default:
+                return getStandardFileFormat();
         }
-
-        model.setCellList(cellList);
-        model.setRowList(rowList);
-        model.setColumnList(columnList);
-        model.setColumnTypeList(columnTypeList);
-
-        return model;
     }
 
-    public static List<Map<String, Object>> getStandardFileFormat() {
+    private static Template getStandardFileFormat() {
 
-        Map<String, Object> map = new HashMap<>();
-        List<Map<String, Object>> list = new ArrayList<>();
+        Template template = new Template();
+        HashMap<String, String> map = new HashMap<>();
+        List<String> columnNames = new ArrayList<>();
+        List<Integer> columnTypes = new ArrayList<>();
+        List<HashMap<String, String>> cells = new ArrayList<>();
 
-        map.put("Name", "");
-        map.put("Phone Number", "");
-        map.put("Address", "");
-        map.put("Date", "");
+        map.put("Field", "");
 
-        list.add(map);
+        cells.add(map);
+        columnTypes.add(Constants.TEXT_COLUMN);
+        columnNames.add("Field");
 
-        return list;
+        template.setCells(cells);
+        template.setColumnNames(columnNames);
+        template.setColumnTypes(columnTypes);
+
+        return template;
     }
 }

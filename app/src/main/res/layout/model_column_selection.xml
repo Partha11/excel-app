@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/card_bg"
+    android:padding="@dimen/_8sdp"
+    android:layout_margin="@dimen/_4sdp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/column_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@id/edit_column_name"
+        android:textSize="@dimen/_10sdp"
+        android:textColor="@android:color/black"
+        tools:text="Name"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/edit_column_name"
+        android:layout_width="@dimen/_18sdp"
+        android:layout_height="@dimen/_18sdp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:padding="@dimen/_5sdp"
+        android:src="@drawable/ic_edit"/>
+
+    <LinearLayout
+        android:id="@+id/type_selector_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/column_name"
+        android:layout_marginTop="@dimen/_7sdp"
+        android:orientation="horizontal"
+        android:background="?android:attr/selectableItemBackground">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/column_type_thumb"
+            android:layout_width="24dp"
+            android:layout_height="24dp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/column_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/_10sdp"
+            android:textColor="@android:color/black"
+            tools:text="Text Column"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

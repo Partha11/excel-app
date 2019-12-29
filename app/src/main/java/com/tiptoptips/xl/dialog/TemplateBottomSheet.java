@@ -1,6 +1,7 @@
 package com.tiptoptips.xl.dialog;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,18 +15,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.tiptoptips.xl.R;
 import com.tiptoptips.xl.adapter.TemplateAdapter;
+import com.tiptoptips.xl.listener.OnTemplateSelectedListener;
 import com.tiptoptips.xl.model.Template;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TemplateBottomSheet extends BottomSheetDialogFragment {
+public class TemplateBottomSheet extends BottomSheetDialogFragment implements OnTemplateSelectedListener {
 
     @BindView(R.id.bottom_template_recycler_view)
     RecyclerView bottomTemplateRecyclerView;
+
+    private OnTemplateSelectedListener listener;
 
     @Nullable
     @Override
@@ -45,12 +50,24 @@ public class TemplateBottomSheet extends BottomSheetDialogFragment {
             templateList.add(template);
         }
 
-        TemplateAdapter adapter = new TemplateAdapter(getContext(), templateList);
+        TemplateAdapter adapter = new TemplateAdapter(getContext(), templateList, this);
+        adapter.setListener(listener);
 
         bottomTemplateRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
         bottomTemplateRecyclerView.setItemAnimator(new DefaultItemAnimator());
         bottomTemplateRecyclerView.setAdapter(adapter);
 
         return view;
+    }
+
+    public void setListener(OnTemplateSelectedListener listener) {
+
+        this.listener = listener;
+    }
+
+    @Override
+    public void onTemplateSelected(int template) {
+
+        listener.onTemplateSelected(template);
     }
 }

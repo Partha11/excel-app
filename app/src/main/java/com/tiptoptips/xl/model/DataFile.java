@@ -20,6 +20,9 @@ public class DataFile {
     @SerializedName("fileData")
     @Expose
     private List<HashMap<String, String>> fileData;
+    @SerializedName("columnTypes")
+    @Expose
+    private List<Integer> columnTypes;
     @SerializedName("sharedWith")
     @Expose
     private List<Share> sharedWith;
@@ -62,5 +65,13 @@ public class DataFile {
 
     public void setSharedWith(List<Share> sharedWith) {
         this.sharedWith = sharedWith;
+    }
+
+    public List<Integer> getColumnTypes() {
+        return columnTypes;
+    }
+
+    public void setColumnTypes(List<Integer> columnTypes) {
+        this.columnTypes = columnTypes;
     }
 }

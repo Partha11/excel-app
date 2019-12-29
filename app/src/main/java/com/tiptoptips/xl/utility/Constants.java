@@ -36,4 +36,13 @@ public interface Constants {
     int DATE_COLUMN = 4;
     int LOCATION_COLUMN = 5;
     int AMOUNT_COLUMN = 6;
+
+    String TEMPLATE_ID = "template_id";
+    int TEMPLATE_STANDARD = 0;
+    int TEMPLATE_TO_DO = 1;
+    int TEMPLATE_EXPENSE = 2;
+    int TEMPLATE_CATALOGUE = 3;
+    int TEMPLATE_CONTACTS = 4;
+    int TEMPLATE_MEDICAL = 5;
+    int TEMPLATE_GROCERY = 6;
 }

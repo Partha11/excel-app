@@ -9,7 +9,6 @@ import androidx.lifecycle.LiveData;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.tiptoptips.xl.database.FileDatabase;
 import com.tiptoptips.xl.repository.FileEditRepository;
 import com.tiptoptips.xl.repository.FirebaseQueryLiveData;
 
@@ -24,7 +23,7 @@ public class FileEditViewModel extends AndroidViewModel {
     public FileEditViewModel(@NonNull Application application) {
 
         super(application);
-        repository = new FileEditRepository(FileDatabase.getInstance(application).getFileDao());
+        repository = new FileEditRepository();
     }
 
     public void setLiveData(String uid, String key) {
@@ -37,16 +36,6 @@ public class FileEditViewModel extends AndroidViewModel {
     public LiveData<DataSnapshot> getFile() {
 
         return liveData;
-    }
-
-    public LiveData<String> getFileFromId(String id) {
-
-        return repository.getFileFromId(id);
-    }
-
-    public LiveData<String> getJson(String fileUrl) {
-
-        return repository.getJson(fileUrl);
     }
 
     public void update(List<HashMap<String, String>> fileData, String key, String uid) {

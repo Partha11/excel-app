@@ -13,7 +13,7 @@
     <string name="no_account">Don\'t have an account?</string>
     <string name="sign_up">Sign Up</string>
 
-    <string name="email_error">This field is mandatory</string>
+    <string name="email_error">This field is required</string>
     <string name="email_invalid">Invalid email format</string>
     <string name="have_account">Already have an account?</string>
     <string name="sign_in">Sign In</string>
@@ -22,6 +22,12 @@
     <string name="validating">Validating Information…</string>
     <string name="passwords_dont_match">Passwords do not match</string>
     <string name="password_length_error">Password must be at least 6 character long</string>
+
+    <string name="file_name">File Name</string>
+    <string name="default_file_name">New File</string>
+    <string name="file_rows">Number of Rows</string>
+    <string name="file_columns">Columns</string>
+    <string name="save">Save</string>
 
     <string-array name="row_column_selection">
         <item>Add Row</item>

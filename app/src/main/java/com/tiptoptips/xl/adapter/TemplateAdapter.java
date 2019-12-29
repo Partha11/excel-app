@@ -11,6 +11,8 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tiptoptips.xl.R;
+import com.tiptoptips.xl.dialog.TemplateBottomSheet;
+import com.tiptoptips.xl.listener.OnTemplateSelectedListener;
 import com.tiptoptips.xl.model.Template;
 
 import java.util.List;
@@ -21,13 +23,16 @@ import butterknife.OnClick;
 
 public class TemplateAdapter extends RecyclerView.Adapter<TemplateAdapter.ViewHolder> {
 
+    private TemplateBottomSheet dialog;
     private Context context;
+    private OnTemplateSelectedListener listener;
     private List<Template> templateList;
 
-    public TemplateAdapter(Context context, List<Template> templateList) {
+    public TemplateAdapter(Context context, List<Template> templateList, TemplateBottomSheet dialog) {
 
         this.context = context;
         this.templateList = templateList;
+        this.dialog = dialog;
     }
 
     @NonNull
@@ -52,6 +57,11 @@ public class TemplateAdapter extends RecyclerView.Adapter<TemplateAdapter.ViewHo
         return templateList == null ? 0 : templateList.size();
     }
 
+    public void setListener(OnTemplateSelectedListener listener) {
+
+        this.listener = listener;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.template_thumb)
@@ -67,6 +77,9 @@ public class TemplateAdapter extends RecyclerView.Adapter<TemplateAdapter.ViewHo
 
         @OnClick(R.id.template_root)
         public void onViewClicked() {
+
+            dialog.dismiss();
+            listener.onTemplateSelected(getAdapterPosition());
         }
     }
 }

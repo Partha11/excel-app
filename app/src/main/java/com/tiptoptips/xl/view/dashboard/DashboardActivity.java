@@ -9,40 +9,33 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.gson.Gson;
 import com.tiptoptips.xl.R;
 import com.tiptoptips.xl.adapter.FilesAdapter;
 import com.tiptoptips.xl.dialog.TemplateBottomSheet;
 import com.tiptoptips.xl.listener.OnItemClickedListener;
+import com.tiptoptips.xl.listener.OnTemplateSelectedListener;
 import com.tiptoptips.xl.model.DataFile;
-import com.tiptoptips.xl.model.UserFile;
 import com.tiptoptips.xl.utility.Constants;
 import com.tiptoptips.xl.utility.SharedPrefs;
-import com.tiptoptips.xl.utility.Utils;
 import com.tiptoptips.xl.view.editor.FileEditActivity;
+import com.tiptoptips.xl.view.selector.SelectorActivity;
 import com.tiptoptips.xl.viewmodel.DashboardViewModel;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class DashboardActivity extends AppCompatActivity implements OnItemClickedListener {
+public class DashboardActivity extends AppCompatActivity implements OnItemClickedListener, OnTemplateSelectedListener {
 
     @BindView(R.id.files_recycler_view)
     RecyclerView filesRecyclerView;
@@ -52,7 +45,6 @@ public class DashboardActivity extends AppCompatActivity implements OnItemClicke
     FloatingActionButton dashboardFab;
 
     private FilesAdapter adapter;
-    private List<UserFile> userFileList;
     private List<DataFile> fileList;
     private DashboardViewModel viewModel;
     private SharedPrefs prefs;
@@ -66,19 +58,23 @@ public class DashboardActivity extends AppCompatActivity implements OnItemClicke
         setContentView(R.layout.activity_dashboard);
         ButterKnife.bind(this);
 
+        if (FirebaseApp.getApps(this).isEmpty()) {
+
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        }
+
+        viewModel = ViewModelProviders.of(this).get(DashboardViewModel.class);
         initialize();
     }
 
     private void initialize() {
 
-        userFileList = new ArrayList<>();
         fileList = new ArrayList<>();
         adapter = new FilesAdapter(this, fileList);
         prefs = new SharedPrefs(this);
-        viewModel = ViewModelProviders.of(this).get(DashboardViewModel.class);
 
         filesRecyclerView.setAdapter(adapter);
-        filesRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, RecyclerView.VERTICAL));
+        filesRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         filesRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         viewModel.setLiveData(prefs.getUid());
@@ -104,27 +100,6 @@ public class DashboardActivity extends AppCompatActivity implements OnItemClicke
                         }
                     }
                 });
-
-//        viewModel.getUserFiles(prefs.getUid())
-//                .observe(this, userFiles -> {
-//
-//                    if (userFiles != null && userFiles.size() > 0) {
-//
-//                        if (userFileList != null) {
-//
-//                            userFileList.clear();
-//                            userFileList.addAll(userFiles);
-//
-//                        } else {
-//
-//                            userFileList = new ArrayList<>(userFiles);
-//                        }
-//                    }
-//
-//                    progressBar.setVisibility(View.GONE);
-//                    adapter.setFileList(userFileList);
-//                    adapter.setListener(this);
-//                });
     }
 
     @Override
@@ -157,6 +132,8 @@ public class DashboardActivity extends AppCompatActivity implements OnItemClicke
     public void onViewClicked() {
 
         TemplateBottomSheet bottomSheet = new TemplateBottomSheet();
+
+        bottomSheet.setListener(this);
         bottomSheet.show(getSupportFragmentManager(), "template");
 
 /*        DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
@@ -213,6 +190,42 @@ public class DashboardActivity extends AppCompatActivity implements OnItemClicke
                     Toast.makeText(this, "Please try again", Toast.LENGTH_SHORT).show();
                 }
             });
+        }*/
+    }
+
+    @Override
+    public void onTemplateSelected(int template) {
+
+        Intent intent = new Intent(DashboardActivity.this, SelectorActivity.class);
+
+        intent.putExtra(Constants.TEMPLATE_ID, template);
+        startActivity(intent);
+
+/*        switch (template) {
+
+            case Constants.TEMPLATE_STANDARD:
+
+                Template t = Utils.getStandardFileFormat();
+
+                if (t != null) {
+
+                    DataFile file = new DataFile();
+                    file.setFileData(t.getCells());
+                }
+
+                break;
+            case Constants.TEMPLATE_TO_DO:
+                break;
+            case Constants.TEMPLATE_EXPENSE:
+                break;
+            case Constants.TEMPLATE_CATALOGUE:
+                break;
+            case Constants.TEMPLATE_CONTACTS:
+                break;
+            case Constants.TEMPLATE_MEDICAL:
+                break;
+            case Constants.TEMPLATE_GROCERY:
+                break;
         }*/
     }
 }
