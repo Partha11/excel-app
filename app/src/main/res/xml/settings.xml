@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:key="@string/app_textsize_key"
+        android:title="@string/app_textsize"
+        android:summary="@string/app_textsize_summary"
+        android:defaultValue="@string/app_textsize_default"
+        android:dialogTitle="@string/textsize_dialog_title"
+        android:entries="@array/text_sizes"
+        android:entryValues="@array/text_sizes"/>
+
+    <SwitchPreference
+        android:key="@string/guidelines_key"
+        android:title="@string/guidelines"
+        android:summary="@string/guidelines_summary"/>
+
+    <PreferenceCategory
+        android:title="@string/table_settings">
+
+        <ListPreference
+            android:key="@string/table_textsize_key"
+            android:title="@string/table_textsize"
+            android:summary="@string/app_textsize_summary"
+            android:defaultValue="@string/tabel_textsize_default"
+            android:dialogTitle="@string/textsize_dialog_title"
+            android:entries="@array/text_sizes"
+            android:entryValues="@array/text_sizes"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/number_settings">
+
+        <ListPreference
+            android:key="@string/currency_key"
+            android:title="@string/currency_prefix"
+            android:summary="@string/currency_summary"
+            android:defaultValue="@string/currency_default_value"
+            android:dialogTitle="@string/currency_dialog_title"
+            android:entries="@array/currency_signs"
+            android:entryValues="@array/currency_signs"/>
+
+        <ListPreference
+            android:key="@string/number_separator_key"
+            android:title="@string/number_separator"
+            android:summary="@string/number_separator_summary"
+            android:defaultValue="@string/number_separator_default"
+            android:dialogTitle="@string/number_separator_dialog"
+            android:entries="@array/currency_signs"
+            android:entryValues="@array/currency_signs"/>
+
+        <SwitchPreference
+            android:key="@string/emptycell_display_key"
+            android:title="@string/emptycell_display"
+            android:summary="@string/emptycell_display_summary"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/about_application">
+
+        <Preference
+            android:title="@string/version"
+            android:summary="@string/version_summary"
+            android:selectable="false"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

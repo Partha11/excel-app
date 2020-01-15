@@ -15,7 +15,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".view.selector.SelectorActivity"></activity>
+        <activity android:name=".view.settings.SettingsActivity"></activity>
+        <activity android:name=".view.selector.SelectorActivity" />
         <activity android:name=".view.editor.FileEditActivity" />
         <activity
             android:name=".view.login.LoginActivity"

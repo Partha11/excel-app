@@ -3,9 +3,12 @@ package com.tiptoptips.xl.view.dashboard;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -26,6 +29,7 @@ import com.tiptoptips.xl.utility.Constants;
 import com.tiptoptips.xl.utility.SharedPrefs;
 import com.tiptoptips.xl.view.editor.FileEditActivity;
 import com.tiptoptips.xl.view.selector.SelectorActivity;
+import com.tiptoptips.xl.view.settings.SettingsActivity;
 import com.tiptoptips.xl.viewmodel.DashboardViewModel;
 
 import java.util.ArrayList;
@@ -228,4 +232,27 @@ public class DashboardActivity extends AppCompatActivity implements OnItemClicke
                 break;
         }*/
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.actionbar_menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+
+        if (item.getItemId() == R.id.option_button) {
+
+            startActivity(new Intent(this, SettingsActivity.class));
+
+            return true;
+        }
+
+        return true;
+    }
+
 }

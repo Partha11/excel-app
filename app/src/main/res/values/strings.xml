@@ -28,6 +28,7 @@
     <string name="file_rows">Number of Rows</string>
     <string name="file_columns">Columns</string>
     <string name="save">Save</string>
+    <string name="settings_text">Settings</string>
 
     <string-array name="row_column_selection">
         <item>Add Row</item>
@@ -43,6 +44,70 @@
         <item>Location Column</item>
         <item>Amount Column</item>
     </string-array>
+
+    <string name="settings">Settings</string>
+
+    //settings strings
+
+    <string name="guidelines_key">guidelines</string>
+    <string name="guidelines">Guidelines</string>
+    <string name="guidelines_summary">Show helper text in every screen</string>
+
+    <string name="app_textsize_key">appTextSize</string>
+    <string name="app_textsize">App Text Size</string>
+    <string name="app_textsize_default">Medium</string>
+    <string name="app_textsize_summary">Medium</string>
+    <string name="textsize_dialog_title">Select Font Size</string>
+    <string name="table_settings">Table Settings</string>
+
+
+    <string name="table_textsize_key">tabelTextSize</string>
+    <string name="table_textsize">Tabel Text Size</string>
+    <string name="tabel_textsize_default">Medium</string>
+
+    <string name="number_settings">Number Settings</string>
+
+    <string name="currency_prefix">Currency Prefix</string>
+    <string name="currency_summary">$</string>
+    <string name="currency_default_value">$</string>
+    <string name="currency_key">currencyKey</string>
+    <string name="currency_dialog_title">Select prefix</string>
+
+    <string name="number_separator_key">numberSeparator</string>
+    <string name="number_separator">Number Separator</string>
+    <string name="number_separator_summary">Not set</string>
+    <string name="number_separator_dialog">Select dialog</string>
+    <string name="number_separator_default">Not set</string>
+
+    <string name="emptycell_display_key">emptyCellDisplay</string>
+    <string name="emptycell_display">Empty Cell Display</string>
+    <string name="emptycell_display_summary">Show 0 in empty cell boxes for number columns</string>
+
+    <string name="about_application">About</string>
+    <string name="version">Version</string>
+    <string name="version_summary">1.0</string>
+
+
+    <array name="text_sizes">
+        <item>Small</item>
+        <item>Medium</item>
+        <item>Large</item>
+    </array>
+
+    <array name="currency_signs">
+        <item>$</item>
+        <item>৳</item>
+        <item>₹</item>
+        <item>Rs</item>
+        <item>€</item>
+        <item>£</item>
+        <item>¥</item>
+        <item>₩</item>
+        <item>₿</item>
+    </array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
