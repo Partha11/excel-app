@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.tiptoptips.xl.R;
 import com.tiptoptips.xl.listener.OnItemClickedListener;
-import com.tiptoptips.xl.model.DataFile;
 import com.tiptoptips.xl.model.UserFile;
 
 import java.util.List;
@@ -24,11 +22,11 @@ import butterknife.OnClick;
 
 public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.ViewHolder> {
 
-    private List<DataFile> userFiles;
+    private List<UserFile> userFiles;
     private Context context;
     private OnItemClickedListener listener;
 
-    public FilesAdapter(Context context, List<DataFile> userFiles) {
+    public FilesAdapter(Context context, List<UserFile> userFiles) {
 
         this.context = context;
         this.userFiles = userFiles;
@@ -54,7 +52,7 @@ public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.ViewHolder> 
         return userFiles == null ? 0 : userFiles.size();
     }
 
-    public void addFile(DataFile file) {
+    public void addFile(UserFile file) {
 
         if (userFiles != null) {
 
@@ -63,7 +61,7 @@ public class FilesAdapter extends RecyclerView.Adapter<FilesAdapter.ViewHolder> 
         }
     }
 
-    public void setFileList(List<DataFile> userFileList) {
+    public void setFileList(List<UserFile> userFileList) {
 
         this.userFiles = userFileList;
         notifyDataSetChanged();

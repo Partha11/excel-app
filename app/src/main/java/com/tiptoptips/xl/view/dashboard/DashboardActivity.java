@@ -24,7 +24,7 @@ import com.tiptoptips.xl.adapter.FilesAdapter;
 import com.tiptoptips.xl.dialog.TemplateBottomSheet;
 import com.tiptoptips.xl.listener.OnItemClickedListener;
 import com.tiptoptips.xl.listener.OnTemplateSelectedListener;
-import com.tiptoptips.xl.model.DataFile;
+import com.tiptoptips.xl.model.UserFile;
 import com.tiptoptips.xl.utility.Constants;
 import com.tiptoptips.xl.utility.SharedPrefs;
 import com.tiptoptips.xl.view.editor.FileEditActivity;
@@ -49,7 +49,7 @@ public class DashboardActivity extends AppCompatActivity implements OnItemClicke
     FloatingActionButton dashboardFab;
 
     private FilesAdapter adapter;
-    private List<DataFile> fileList;
+    private List<UserFile> fileList;
     private DashboardViewModel viewModel;
     private SharedPrefs prefs;
 
@@ -98,7 +98,7 @@ public class DashboardActivity extends AppCompatActivity implements OnItemClicke
 
                         for (DataSnapshot d : dataSnapshot.getChildren()) {
 
-                            DataFile file = d.getValue(DataFile.class);
+                            UserFile file = d.getValue(UserFile.class);
                             adapter.addFile(file);
                             adapter.setListener(this);
                         }
@@ -121,7 +121,7 @@ public class DashboardActivity extends AppCompatActivity implements OnItemClicke
     }
 
     @Override
-    public void onItemClick(DataFile file) {
+    public void onItemClick(UserFile file) {
 
         if (file != null) {
 
@@ -165,7 +165,7 @@ public class DashboardActivity extends AppCompatActivity implements OnItemClicke
 
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
             String formattedDate = df.format(date);
-            DataFile file = new DataFile();
+            UserFile file = new UserFile();
             HashMap<String, String> model = new HashMap<>();
             List<HashMap<String, String>> object = new ArrayList<>();
 
@@ -213,7 +213,7 @@ public class DashboardActivity extends AppCompatActivity implements OnItemClicke
 
                 if (t != null) {
 
-                    DataFile file = new DataFile();
+                    UserFile file = new UserFile();
                     file.setFileData(t.getCells());
                 }
 

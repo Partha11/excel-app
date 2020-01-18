@@ -20,6 +20,7 @@ import com.tiptoptips.xl.viewholder.RowHeaderViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class TableAdapter extends AbstractTableAdapter<ColumnHeader, RowHeader, Cell> {
 
@@ -129,7 +130,7 @@ public class TableAdapter extends AbstractTableAdapter<ColumnHeader, RowHeader, 
         RowHeader rowHeader = (RowHeader) rowHeaderItemModel;
         RowHeaderViewHolder rowHeaderViewHolder = (RowHeaderViewHolder) holder;
 
-        rowHeaderViewHolder.row_header_textview.setText(String.valueOf(rowHeader.getData()));
+        rowHeaderViewHolder.row_header_textview.setText(Objects.requireNonNull(rowHeader.getData()).toString());
     }
 
     @Override

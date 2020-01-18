@@ -1,7 +1,6 @@
 package com.tiptoptips.xl.dialog;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ import com.tiptoptips.xl.model.Template;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,8 +42,10 @@ public class TemplateBottomSheet extends BottomSheetDialogFragment implements On
 
         template.setTemplateName("Default");
         template.setTemplateThumb(android.R.drawable.btn_plus);
+        templateList.add(new Template("Default", android.R.drawable.btn_plus));
+        templateList.add(new Template("Product Catalogue", android.R.drawable.btn_plus));
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 2; i < 6; i++) {
 
             templateList.add(template);
         }

@@ -30,6 +30,14 @@
     <string name="save">Save</string>
     <string name="settings_text">Settings</string>
 
+    <string name="add_column">Insert Column</string>
+    <string name="add_row">Insert Row</string>
+    <string name="export_as">Export As</string>
+    <string name="add_people">Add People</string>
+    <string name="export_as_excel">Create Excel</string>
+    <string name="export_as_pdf">Create PDF</string>
+    <string name="export_as_word">Create Word</string>
+
     <string-array name="row_column_selection">
         <item>Add Row</item>
         <item>Add Column</item>
@@ -42,7 +50,9 @@
         <item>Phone Column</item>
         <item>Date Column</item>
         <item>Location Column</item>
-        <item>Amount Column</item>
+        <item>Price Column</item>
+        <item>Checkbox Column</item>
+        <item>List Column</item>
     </string-array>
 
     <string name="settings">Settings</string>

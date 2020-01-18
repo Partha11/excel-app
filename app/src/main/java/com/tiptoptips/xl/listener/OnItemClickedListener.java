@@ -1,8 +1,8 @@
 package com.tiptoptips.xl.listener;
 
-import com.tiptoptips.xl.model.DataFile;
+import com.tiptoptips.xl.model.UserFile;
 
 public interface OnItemClickedListener {
 
-    void onItemClick(DataFile file);
+    void onItemClick(UserFile file);
 }

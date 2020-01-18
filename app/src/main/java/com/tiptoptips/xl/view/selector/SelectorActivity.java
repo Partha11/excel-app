@@ -20,7 +20,7 @@ import com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPicker
 import com.tiptoptips.xl.R;
 import com.tiptoptips.xl.adapter.SelectorAdapter;
 import com.tiptoptips.xl.listener.OnFileModifiedListener;
-import com.tiptoptips.xl.model.DataFile;
+import com.tiptoptips.xl.model.UserFile;
 import com.tiptoptips.xl.model.Template;
 import com.tiptoptips.xl.utility.Constants;
 import com.tiptoptips.xl.utility.SharedPrefs;
@@ -130,7 +130,7 @@ public class SelectorActivity extends AppCompatActivity implements ScrollableNum
                         obj.add(temp);
                     }
 
-                    DataFile file = new DataFile();
+                    UserFile file = new UserFile();
                     SharedPrefs prefs = new SharedPrefs(this);
                     Date date = Calendar.getInstance().getTime();
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
@@ -145,16 +145,16 @@ public class SelectorActivity extends AppCompatActivity implements ScrollableNum
                     runOnUiThread(() -> viewModel.insertFile(prefs.getUid(), file)
                             .observe(this, s -> {
 
-                                if (s != null) {
+                        if (s != null) {
 
-                                    dialog.dismiss();
+                            dialog.dismiss();
 
-                                    Intent intent = new Intent(SelectorActivity.this, FileEditActivity.class);
-                                    intent.putExtra(Constants.SELECTED_ITEM, s);
-                                    finish();
-                                    startActivity(intent);
-                                }
-                            }));
+                            Intent intent = new Intent(SelectorActivity.this, FileEditActivity.class);
+                            intent.putExtra(Constants.SELECTED_ITEM, s);
+                            finish();
+                            startActivity(intent);
+                        }
+                    }));
 
                 }).start();
             }

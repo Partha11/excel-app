@@ -11,6 +11,15 @@ public class Template {
     private List<Integer> columnTypes;
     private List<HashMap<String, String>> cells;
 
+    public Template() {
+    }
+
+    public Template(String templateName, int templateThumb) {
+
+        this.templateName = templateName;
+        this.templateThumb = templateThumb;
+    }
+
     public String getTemplateName() {
         return templateName;
     }

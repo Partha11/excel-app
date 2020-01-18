@@ -52,7 +52,23 @@ public class SelectorAdapter extends RecyclerView.Adapter<SelectorAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        holder.columnName.setText(columnNames.get(position));
+        String[] items = columnNames.get(position).split("__");
+        String title = "";
+
+        if (items.length > 1) {
+
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 1; i < items.length; i++) {
+
+                sb.append(items[i]);
+                sb.append("_");
+            }
+
+            title = sb.toString();
+        }
+
+        holder.columnName.setText(title);
         holder.columnType.setText(utils.getColumnName(columnTypes.get(position)));
     }
 

@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.tiptoptips.xl.model.DataFile;
+import com.tiptoptips.xl.model.UserFile;
 import com.tiptoptips.xl.repository.SelectorRepository;
 
 public class SelectorViewModel extends AndroidViewModel {
@@ -19,7 +19,7 @@ public class SelectorViewModel extends AndroidViewModel {
         repository = new SelectorRepository();
     }
 
-    public LiveData<String> insertFile(String uid, DataFile file) {
+    public LiveData<String> insertFile(String uid, UserFile file) {
 
         return repository.insertFile(uid, file);
     }

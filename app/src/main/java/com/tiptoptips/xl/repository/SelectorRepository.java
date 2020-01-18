@@ -4,11 +4,11 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.tiptoptips.xl.model.DataFile;
+import com.tiptoptips.xl.model.UserFile;
 
 public class SelectorRepository {
 
-    public MutableLiveData<String> insertFile(String uid, DataFile file) {
+    public MutableLiveData<String> insertFile(String uid, UserFile file) {
 
         MutableLiveData<String> data = new MutableLiveData<>();
         DatabaseReference reference  = FirebaseDatabase.getInstance().getReference().child("users")

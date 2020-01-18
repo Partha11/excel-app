@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 import com.tiptoptips.xl.R;
 
+import java.util.Objects;
+
 public class SettingsActivity extends AppCompatActivity {
 
     @Override
@@ -14,12 +16,11 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        getSupportActionBar().setTitle(R.string.settings);
+        Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.settings);
 
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.settings_container, new SettingsFragment())
                 .commit();
-
     }
 }

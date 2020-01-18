@@ -1,12 +1,18 @@
 package com.tiptoptips.xl.view.editor;
 
+import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.NumberPicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
@@ -16,14 +22,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.evrencoskun.tableview.TableView;
 import com.evrencoskun.tableview.listener.ITableViewListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.tiptoptips.xl.R;
 import com.tiptoptips.xl.adapter.TableAdapter;
 import com.tiptoptips.xl.dialog.ColumnDialog;
 import com.tiptoptips.xl.listener.DialogPositionListener;
 import com.tiptoptips.xl.model.Cell;
 import com.tiptoptips.xl.model.ColumnHeader;
-import com.tiptoptips.xl.model.DataFile;
 import com.tiptoptips.xl.model.RowHeader;
+import com.tiptoptips.xl.model.UserFile;
 import com.tiptoptips.xl.utility.Constants;
 import com.tiptoptips.xl.utility.SharedPrefs;
 import com.tiptoptips.xl.viewmodel.FileEditViewModel;
@@ -32,10 +39,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import io.reactivex.disposables.Disposable;
 
 public class FileEditActivity extends AppCompatActivity implements DialogPositionListener, ITableViewListener {
 
@@ -44,13 +52,12 @@ public class FileEditActivity extends AppCompatActivity implements DialogPositio
     @BindView(R.id.table_view)
     TableView tableView;
 
-    private List<Integer> columnTypeList;
-
     private List<ColumnHeader> columnList;
     private List<RowHeader> rowList;
-    List<List<Cell>> twoDimensionalCell;
+    private List<String> columnNames;
+    private List<List<Cell>> twoDimensionalCell;
 
-    private DataFile file;
+    private UserFile file;
     private SharedPrefs prefs;
     private TableAdapter adapter;
     private FileEditViewModel fileViewModel;
@@ -108,7 +115,7 @@ public class FileEditActivity extends AppCompatActivity implements DialogPositio
         adapter.setColumnType(columnTypeList);
         adapter.setAllItems(columnHeaders, rowList, cells);*/
 
-        testJson();
+        parseJson();
     }
 
 /*                            if (file != null) {
@@ -163,7 +170,7 @@ public class FileEditActivity extends AppCompatActivity implements DialogPositio
         Log.d("Null", String.valueOf(getIntent().getIntExtra(Constants.SELECTED_ITEM, -1)));
     }*/
 
-    private void testJson() {
+    private void parseJson() {
 
         if (getIntent().hasExtra(Constants.SELECTED_ITEM)) {
 
@@ -180,11 +187,11 @@ public class FileEditActivity extends AppCompatActivity implements DialogPositio
                     if (dataSnapshot.hasChildren()) {
 
                         columnList = new ArrayList<>();
+                        columnNames = new ArrayList<>();
                         rowList = new ArrayList<>();
                         twoDimensionalCell = new ArrayList<>();
-                        columnTypeList = new ArrayList<>();
 
-                        file = dataSnapshot.getValue(DataFile.class);
+                        file = dataSnapshot.getValue(UserFile.class);
 
                         if (file != null) {
 
@@ -193,23 +200,24 @@ public class FileEditActivity extends AppCompatActivity implements DialogPositio
                             for (int i = 0; i < rowCount; i++) {
 
                                 List<Cell> cellList = new ArrayList<>();
+                                TreeMap<String, String> map = new TreeMap<>(file.getFileData().get(i));
 
-                                for (Map.Entry<String, String> entry : file.getFileData().get(i).entrySet()) {
+                                for (Map.Entry<String, String> entry : map.entrySet()) {
 
                                     if (i == 0) {
 
-                                        columnCount = file.getFileData().get(i).size();
+                                        columnCount = map.size();
                                         columnList.add(new ColumnHeader(String.valueOf(i), entry.getKey()));
+                                        columnNames.add(entry.getKey());
                                     }
 
                                     cellList.add(new Cell(String.valueOf(i), entry.getValue()));
-                                    columnTypeList.add(Constants.TEXT_COLUMN);
                                 }
 
                                 rowList.add(new RowHeader(String.valueOf(i + 1), String.valueOf(i + 1)));
                                 twoDimensionalCell.add(cellList);
 
-                                adapter.setColumnType(columnTypeList);
+                                adapter.setColumnType(file.getColumnTypes());
                                 adapter.setAllItems(columnList, rowList, twoDimensionalCell);
                             }
                         }
@@ -219,75 +227,127 @@ public class FileEditActivity extends AppCompatActivity implements DialogPositio
         }
     }
 
-    @OnClick(R.id.editor_fab)
-    public void onViewClicked() {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 
-        AlertDialog.Builder typeAlertBuilder = new AlertDialog.Builder(this)
-                .setTitle("Select Type")
-                .setItems(getResources().getStringArray(R.array.row_column_selection), (dialogInterface, i) -> {
+        getMenuInflater().inflate(R.menu.editor_menu, menu);
+        return true;
+    }
 
-                    if (i == 0) {
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-                        final NumberPicker numberPicker = new NumberPicker(this);
-                        numberPicker.setMaxValue(100);
-                        numberPicker.setMinValue(1);
+        switch(item.getItemId()) {
 
-                        AlertDialog.Builder rowAlertBuilder = new AlertDialog.Builder(this)
-                                .setView(numberPicker)
-                                .setTitle("Insert Multiple Rows")
-                                .setPositiveButton("Create", (dialog, which) -> {
+            case R.id.add_row:
 
-                                    int count = numberPicker.getValue();
+                addNewRow();
+                return true;
 
-                                    Log.d("Rows:", String.valueOf(rowCount));
-                                    Log.d("Columns:", String.valueOf(columnCount));
+            case R.id.add_column:
 
-                                    for (int k = 0; k < count; k++) {
+                ColumnDialog fragment = new ColumnDialog();
 
-                                        List<Cell> tempList = new ArrayList<>();
-                                        HashMap<String, String> newRow = new HashMap<>();
+                fragment.setListener(this);
+                fragment.show(getSupportFragmentManager(), "column");
+                return true;
 
-                                        for (int j = 0; j < columnCount; j++) {
+            case R.id.export_excel:
+                //create xls from json
+                return true;
+            case R.id.add_people:
+                //add people dialog
+                return true;
+            default:
+                return false;
 
-                                            tempList.add(new Cell(String.valueOf(columnCount + j + 1), ""));
-                                            newRow.put(String.valueOf(columnList.get(j).getData()), "");
-                                        }
+        }
+    }
 
-                                        rowList.add(new RowHeader(String.valueOf(++rowCount),
-                                                String.valueOf(rowCount)));
-                                        twoDimensionalCell.add(tempList);
-                                        adapter.setAllItems(columnList, rowList, twoDimensionalCell);
+    private void addNewRow() {
 
-                                        if (file != null && !TextUtils.isEmpty(key)) {
+        final NumberPicker numberPicker = new NumberPicker(this);
+        numberPicker.setMaxValue(100);
+        numberPicker.setMinValue(1);
 
-                                            file.getFileData().add(newRow);
-                                            fileViewModel.update(file.getFileData(), key, prefs.getUid());
-                                        }
+        AlertDialog.Builder rowAlertBuilder = new AlertDialog.Builder(this)
+                .setView(numberPicker)
+                .setTitle("Insert Multiple Rows")
+                .setPositiveButton("Create", (dialog, which) -> {
 
-                                        dialog.dismiss();
-                                    }
-                                })
-                                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+                    int count = numberPicker.getValue();
 
-                        rowAlertBuilder.create().show();
+                    Log.d("Rows:", String.valueOf(rowCount));
+                    Log.d("Columns:", String.valueOf(columnCount));
 
-                    } else if (i == 1) {
+                    for (int k = 0; k < count; k++) {
 
-                        ColumnDialog fragment = new ColumnDialog();
+                        List<Cell> tempList = new ArrayList<>();
+                        HashMap<String, String> newRow = new HashMap<>();
 
-                        fragment.setListener(this);
-                        fragment.show(getSupportFragmentManager(), "column");
+                        for (int j = 0; j < columnCount; j++) {
+
+                            tempList.add(new Cell(String.valueOf(columnCount + j + 1), ""));
+                            newRow.put(String.valueOf(columnList.get(j).getData()), "");
+                        }
+
+                        rowList.add(new RowHeader(String.valueOf(++rowCount),
+                                String.valueOf(rowCount)));
+                        twoDimensionalCell.add(tempList);
+                        adapter.setAllItems(columnList, rowList, twoDimensionalCell);
+
+                        if (file != null && !TextUtils.isEmpty(key)) {
+
+                            file.getFileData().add(newRow);
+                            fileViewModel.update(file.getFileData(), key, prefs.getUid());
+                        }
+
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+
+        rowAlertBuilder.create().show();
+    }
+
+    private void checkPermissions() {
+
+        RxPermissions permissions = new RxPermissions(this);
+        Disposable disposable = permissions.request(Manifest.permission.READ_EXTERNAL_STORAGE)
+                .subscribe(granted -> {
+
+                    if (granted) {
+
+                        requestGallery();
+
+                    } else {
+
+                        Toast.makeText(this, "Permission needed for this action", Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
 
-        typeAlertBuilder.create().show();
+    private void requestGallery() {
+
+        Intent intent=new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        String[] types = {"image/jpeg", "image/png"};
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, types);
+        startActivityForResult(intent, Constants.GALLERY_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     public void onItemClicked(int position, String text) {
 
         columnList.add(new ColumnHeader(String.valueOf(++columnCount), text));
-        columnTypeList.add(position);
+        columnNames.add(text);
+        file.getColumnTypes().add(position);
 
         for (int i = 0; i < twoDimensionalCell.size(); i++) {
 
@@ -296,7 +356,7 @@ public class FileEditActivity extends AppCompatActivity implements DialogPositio
         }
 
         fileViewModel.update(file.getFileData(), file.getFileKey(), prefs.getUid());
-        adapter.setColumnType(columnTypeList);
+        adapter.setColumnType(file.getColumnTypes());
         adapter.setAllItems(columnList, rowList, twoDimensionalCell);
     }
 
@@ -305,12 +365,12 @@ public class FileEditActivity extends AppCompatActivity implements DialogPositio
 
         if (file != null) {
 
-            switch (columnTypeList.get(column)) {
+            switch (file.getColumnTypes().get(column)) {
 
                 case Constants.TEXT_COLUMN:
 
                     AppCompatEditText editText = new AppCompatEditText(this);
-                    editText.setHint("Text");
+                    editText.setHint(columnNames.get(column));
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(this)
                             .setTitle("Edit Field")
@@ -346,10 +406,10 @@ public class FileEditActivity extends AppCompatActivity implements DialogPositio
                     break;
 
                 case Constants.IMAGE_COLUMN:
+
+                    checkPermissions();
                     break;
             }
-
-            Log.d("Column Type", String.valueOf(columnTypeList.get(column)));
         }
     }
 
