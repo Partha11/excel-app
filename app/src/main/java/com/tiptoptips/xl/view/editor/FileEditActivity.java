@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 
 import butterknife.BindView;
@@ -408,6 +409,20 @@ public class FileEditActivity extends AppCompatActivity implements DialogPositio
                 case Constants.IMAGE_COLUMN:
 
                     checkPermissions();
+                    break;
+
+                case Constants.CHECKBOX_COLUMN:
+
+                    String text = Objects.requireNonNull(twoDimensionalCell.get(row).get(column).getData()).toString();
+                    String value = text.equals("true") ? "false" : "true";
+
+                    twoDimensionalCell.get(row).get(column).setData(value);
+
+                    file.getFileData().get(row).put(String.valueOf(columnList.get(column).getData()), value);
+                    fileViewModel.update(file.getFileData(), key, prefs.getUid());
+
+                    adapter.getCellItem(column, row).setData(value);
+                    adapter.notifyDataSetChanged();
                     break;
             }
         }

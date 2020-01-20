@@ -14,6 +14,7 @@ import com.tiptoptips.xl.model.ColumnHeader;
 import com.tiptoptips.xl.model.RowHeader;
 import com.tiptoptips.xl.utility.Constants;
 import com.tiptoptips.xl.viewholder.CellViewHolder;
+import com.tiptoptips.xl.viewholder.CheckboxViewHolder;
 import com.tiptoptips.xl.viewholder.ColumnHeaderViewHolder;
 import com.tiptoptips.xl.viewholder.ImageCellViewHolder;
 import com.tiptoptips.xl.viewholder.RowHeaderViewHolder;
@@ -62,6 +63,10 @@ public class TableAdapter extends AbstractTableAdapter<ColumnHeader, RowHeader, 
         if (columnTypeList.get(position) == Constants.IMAGE_COLUMN) {
 
             return Constants.IMAGE_COLUMN;
+
+        } else if (columnTypeList.get(position) == Constants.CHECKBOX_COLUMN) {
+
+            return Constants.CHECKBOX_COLUMN;
         }
 
         return Constants.TEXT_COLUMN;
@@ -77,6 +82,11 @@ public class TableAdapter extends AbstractTableAdapter<ColumnHeader, RowHeader, 
 
             view = inflater.inflate(R.layout.table_view_image_cell_layout, parent, false);
             return new ImageCellViewHolder(view);
+
+        } else if (viewType == Constants.CHECKBOX_COLUMN) {
+
+            view = inflater.inflate(R.layout.table_view_checkbox_cell_layout, parent, false);
+            return new CheckboxViewHolder(view);
         }
 
         view = inflater.inflate(R.layout.table_view_cell_layout, parent, false);
@@ -90,9 +100,14 @@ public class TableAdapter extends AbstractTableAdapter<ColumnHeader, RowHeader, 
 
         if (holder.getItemViewType() == Constants.IMAGE_COLUMN) {
 
-            ImageCellViewHolder moodViewHolder = (ImageCellViewHolder) holder;
-            moodViewHolder.setData(null);
+            ImageCellViewHolder viewHolder = (ImageCellViewHolder) holder;
+            viewHolder.setData(null);
 //            moodViewHolder.cell_image.setImageResource(tableViewModel.getDrawable((int) cell.getData(), false));
+
+        } else if (holder.getItemViewType() == Constants.CHECKBOX_COLUMN) {
+
+            CheckboxViewHolder viewHolder = (CheckboxViewHolder) holder;
+            viewHolder.setData(cell);
 
         } else {
 
