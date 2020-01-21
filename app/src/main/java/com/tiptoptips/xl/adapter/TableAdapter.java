@@ -100,7 +100,7 @@ public class TableAdapter extends AbstractTableAdapter<ColumnHeader, RowHeader, 
         if (holder.getItemViewType() == Constants.IMAGE_COLUMN) {
 
             ImageCellViewHolder viewHolder = (ImageCellViewHolder) holder;
-            viewHolder.setData(null);
+            viewHolder.setData(cell.getData());
 //            moodViewHolder.cell_image.setImageResource(tableViewModel.getDrawable((int) cell.getData(), false));
 
         } else if (holder.getItemViewType() == Constants.CHECKBOX_COLUMN) {
