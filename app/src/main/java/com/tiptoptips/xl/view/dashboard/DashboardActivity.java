@@ -143,7 +143,7 @@ public class DashboardActivity extends AppCompatActivity implements OnItemClicke
             case R.id.navDrawer_settings:
                 startActivity(new Intent(this, SettingsActivity.class));
                 break;
-
+            //sdfsdfsd
             case R.id.navDrawer_Buy:
                 break;
 
