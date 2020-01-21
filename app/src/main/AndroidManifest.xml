@@ -22,7 +22,8 @@
         <activity
             android:name=".view.login.LoginActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".view.dashboard.DashboardActivity" />
+        <activity android:name=".view.dashboard.DashboardActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".view.splash.SplashActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">

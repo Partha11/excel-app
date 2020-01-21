@@ -9,13 +9,19 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
@@ -39,7 +45,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class DashboardActivity extends AppCompatActivity implements OnItemClickedListener, OnTemplateSelectedListener {
+public class DashboardActivity extends AppCompatActivity implements OnItemClickedListener, OnTemplateSelectedListener, NavigationView.OnNavigationItemSelectedListener {
 
     @BindView(R.id.files_recycler_view)
     RecyclerView filesRecyclerView;
@@ -47,6 +53,13 @@ public class DashboardActivity extends AppCompatActivity implements OnItemClicke
     ProgressBar progressBar;
     @BindView(R.id.dashboard_fab)
     FloatingActionButton dashboardFab;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.navigation_view)
+    NavigationView navigationView;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawer;
+
 
     private FilesAdapter adapter;
     private List<UserFile> fileList;
@@ -62,13 +75,17 @@ public class DashboardActivity extends AppCompatActivity implements OnItemClicke
         setContentView(R.layout.activity_dashboard);
         ButterKnife.bind(this);
 
+        setSupportActionBar(toolbar);
+
         if (FirebaseApp.getApps(this).isEmpty()) {
 
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         }
 
         viewModel = ViewModelProviders.of(this).get(DashboardViewModel.class);
+
         initialize();
+        setNavigationView();
     }
 
     private void initialize() {
@@ -106,10 +123,54 @@ public class DashboardActivity extends AppCompatActivity implements OnItemClicke
                 });
     }
 
+    public void setNavigationView() {
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
+        navigationView.setNavigationItemSelectedListener(this);
+
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case R.id.navDrawer_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+                break;
+
+            case R.id.navDrawer_Buy:
+                break;
+
+            case R.id.navDrawer_rateUs:
+                break;
+
+            case R.id.navDrawer_exit:
+                Toast.makeText(this, "Exit", Toast.LENGTH_SHORT).show();
+                finishAndRemoveTask();
+                break;
+        }
+
+        drawer.closeDrawer(GravityCompat.START);
+
+        return true;
+
+    }
+
     @Override
     public void onBackPressed() {
 
-        if (doubleBackPressed) {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+
+            drawer.closeDrawer(GravityCompat.START);
+            return;
+
+        } else if (doubleBackPressed) {
 
             super.onBackPressed();
             return;

@@ -55,7 +55,6 @@
         <item>List Column</item>
     </string-array>
 
-    <string name="settings">Settings</string>
 
     //settings strings
 
@@ -116,8 +115,20 @@
         <item>₿</item>
     </array>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- drawer menu strings -->
+
+    <string name="buy_and_subscribe">Buy/Subscribe</string>
+    <string name="rate_us">Rate Us</string>
+    <string name="settings">Settings</string>
+    <string name="exit">Exit</string>
+
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="General">General</string>
+    <string name="email_address">something@email.com</string>
 
 
 </resources>
