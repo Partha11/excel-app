@@ -26,7 +26,6 @@ import java.util.Objects;
 public class TableAdapter extends AbstractTableAdapter<ColumnHeader, RowHeader, Cell> {
 
     private Context context;
-
     private List<Integer> columnTypeList;
 
     public TableAdapter(Context context) {
@@ -112,7 +111,7 @@ public class TableAdapter extends AbstractTableAdapter<ColumnHeader, RowHeader, 
         } else {
 
             CellViewHolder viewHolder = (CellViewHolder) holder;
-            viewHolder.setCell(cell);
+            viewHolder.setCell(cell, holder.getItemViewType());
         }
     }
 
