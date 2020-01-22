@@ -1,5 +1,6 @@
 package com.tiptoptips.xl.viewholder;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -9,6 +10,9 @@ import androidx.appcompat.widget.AppCompatImageView;
 import com.bumptech.glide.Glide;
 import com.evrencoskun.tableview.adapter.recyclerview.holder.AbstractViewHolder;
 import com.tiptoptips.xl.R;
+import com.tiptoptips.xl.model.Cell;
+
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,12 +28,15 @@ public class ImageCellViewHolder extends AbstractViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
-    public void setData(Object data) {
+    public void setData(Cell data) {
 
-        String url = "https://tiptoptips.info/android/resultsys/uploads/temp.jpg";
+        String url = Objects.requireNonNull(data.getData()).toString();
 
-        Glide.with(cell_image.getRootView())
-                .load(url)
-                .into(cell_image);
+        if (!TextUtils.isEmpty(url)) {
+
+            Glide.with(cell_image.getRootView())
+                    .load(url)
+                    .into(cell_image);
+        }
     }
 }

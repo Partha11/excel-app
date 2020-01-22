@@ -59,16 +59,7 @@ public class TableAdapter extends AbstractTableAdapter<ColumnHeader, RowHeader, 
     @Override
     public int getCellItemViewType(int position) {
 
-        if (columnTypeList.get(position) == Constants.IMAGE_COLUMN) {
-
-            return Constants.IMAGE_COLUMN;
-
-        } else if (columnTypeList.get(position) == Constants.CHECKBOX_COLUMN) {
-
-            return Constants.CHECKBOX_COLUMN;
-        }
-
-        return Constants.TEXT_COLUMN;
+        return columnTypeList.get(position);
     }
 
     @Override
@@ -100,7 +91,7 @@ public class TableAdapter extends AbstractTableAdapter<ColumnHeader, RowHeader, 
         if (holder.getItemViewType() == Constants.IMAGE_COLUMN) {
 
             ImageCellViewHolder viewHolder = (ImageCellViewHolder) holder;
-            viewHolder.setData(cell.getData());
+            viewHolder.setData(cell);
 //            moodViewHolder.cell_image.setImageResource(tableViewModel.getDrawable((int) cell.getData(), false));
 
         } else if (holder.getItemViewType() == Constants.CHECKBOX_COLUMN) {

@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -143,7 +142,7 @@ public class DashboardActivity extends AppCompatActivity implements OnItemClicke
             case R.id.navDrawer_settings:
                 startActivity(new Intent(this, SettingsActivity.class));
                 break;
-            //sdfsdfsd
+
             case R.id.navDrawer_Buy:
                 break;
 
@@ -305,11 +304,9 @@ public class DashboardActivity extends AppCompatActivity implements OnItemClicke
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-
         if (item.getItemId() == R.id.option_button) {
 
             startActivity(new Intent(this, SettingsActivity.class));
-
             return true;
         }
 

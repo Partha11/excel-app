@@ -26,6 +26,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.tiptoptips.xl.R;
 import com.tiptoptips.xl.adapter.TableAdapter;
 import com.tiptoptips.xl.dialog.ColumnDialog;
+import com.tiptoptips.xl.dialog.ListDialog;
 import com.tiptoptips.xl.listener.DialogPositionListener;
 import com.tiptoptips.xl.model.Cell;
 import com.tiptoptips.xl.model.ColumnHeader;
@@ -423,6 +424,13 @@ public class FileEditActivity extends AppCompatActivity implements DialogPositio
 
                     adapter.getCellItem(column, row).setData(value);
                     adapter.notifyDataSetChanged();
+                    break;
+
+                case Constants.LIST_COLUMN:
+
+                    ListDialog dialog = new ListDialog();
+                    dialog.show(getSupportFragmentManager(), "list");
+
                     break;
             }
         }

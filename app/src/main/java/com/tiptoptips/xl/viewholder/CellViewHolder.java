@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import com.evrencoskun.tableview.adapter.recyclerview.holder.AbstractViewHolder;
@@ -31,11 +30,17 @@ public class CellViewHolder extends AbstractViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
-    public void setCell(@Nullable Cell cell, int viewType) {
+    public void setCell(@NonNull Cell cell, int viewType) {
 
         if (viewType == Constants.TEXT_COLUMN) {
 
-            String data = Objects.requireNonNull(Objects.requireNonNull(cell).getData()).toString();
+            String data = "";
+
+            if (cell.getData() != null) {
+
+                data = cell.getData().toString();
+            }
+
             textView.setText(Html.fromHtml(data));
 
         } else if (viewType == Constants.LIST_COLUMN) {
