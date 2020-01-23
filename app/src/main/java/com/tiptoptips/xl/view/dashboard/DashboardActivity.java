@@ -15,6 +15,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -73,6 +75,8 @@ public class DashboardActivity extends AppCompatActivity implements OnItemClicke
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         ButterKnife.bind(this);
+
+        PreferenceManager.setDefaultValues(this, R.xml.settings, false); // default values of settings
 
         setSupportActionBar(toolbar);
 
