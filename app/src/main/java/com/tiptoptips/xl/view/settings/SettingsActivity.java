@@ -1,8 +1,10 @@
 package com.tiptoptips.xl.view.settings;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.tiptoptips.xl.R;
 
@@ -16,6 +18,9 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.settings);
 
         getSupportFragmentManager()
@@ -23,4 +28,15 @@ public class SettingsActivity extends AppCompatActivity {
                 .replace(R.id.settings_container, new SettingsFragment())
                 .commit();
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
+
