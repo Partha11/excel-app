@@ -122,6 +122,8 @@ public class DashboardActivity extends AppCompatActivity implements OnItemClicke
                 });
     }
 
+    //DSFSAF
+
     public void setNavigationView() {
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
