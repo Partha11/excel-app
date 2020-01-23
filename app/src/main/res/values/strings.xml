@@ -61,6 +61,7 @@
     <string name="guidelines_key">guidelines</string>
     <string name="guidelines">Guidelines</string>
     <string name="guidelines_summary">Show helper text in every screen</string>
+    <string name="guidelines_default">false</string>
 
     <string name="app_textsize_key">appTextSize</string>
     <string name="app_textsize">App Text Size</string>
@@ -85,12 +86,14 @@
     <string name="number_separator_key">numberSeparator</string>
     <string name="number_separator">Number Separator</string>
     <string name="number_separator_summary">Not set</string>
-    <string name="number_separator_dialog">Select dialog</string>
+    <string name="number_separator_dialog">Select format</string>
     <string name="number_separator_default">Not set</string>
 
     <string name="emptycell_display_key">emptyCellDisplay</string>
     <string name="emptycell_display">Empty Cell Display</string>
     <string name="emptycell_display_summary">Show 0 in empty cell boxes for number columns</string>
+    <string name="emptycell_display_default">false</string>
+
 
     <string name="about_application">About</string>
     <string name="version">Version</string>
@@ -115,6 +118,13 @@
         <item>₿</item>
     </array>
 
+    <array name="number_formats">
+        <item>Not set</item>
+        <item>1,000,000 (Millions)</item>
+        <item>10,00,000 (Lacs)</item>
+        <item>1,0000,0000 (Ten Thousand)</item>
+    </array>
+
     <!-- drawer menu strings -->
 
     <string name="buy_and_subscribe">Buy/Subscribe</string>
@@ -129,6 +139,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="General">General</string>
     <string name="email_address">something@email.com</string>
+
 
 
 </resources>

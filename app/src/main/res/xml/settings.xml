@@ -13,7 +13,8 @@
     <SwitchPreference
         android:key="@string/guidelines_key"
         android:title="@string/guidelines"
-        android:summary="@string/guidelines_summary"/>
+        android:summary="@string/guidelines_summary"
+        android:defaultValue="@string/guidelines_default"/>
 
     <PreferenceCategory
         android:title="@string/table_settings">
@@ -47,13 +48,14 @@
             android:summary="@string/number_separator_summary"
             android:defaultValue="@string/number_separator_default"
             android:dialogTitle="@string/number_separator_dialog"
-            android:entries="@array/currency_signs"
-            android:entryValues="@array/currency_signs"/>
+            android:entries="@array/number_formats"
+            android:entryValues="@array/number_formats"/>
 
         <SwitchPreference
             android:key="@string/emptycell_display_key"
             android:title="@string/emptycell_display"
-            android:summary="@string/emptycell_display_summary"/>
+            android:summary="@string/emptycell_display_summary"
+            android:defaultValue="@string/emptycell_display_default"/>
 
     </PreferenceCategory>
 

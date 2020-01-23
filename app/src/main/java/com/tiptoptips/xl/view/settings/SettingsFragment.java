@@ -35,7 +35,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
                 } else if (key.equals(getContext().getResources().getString(R.string.guidelines_key))) {
 
-                    findPreference(key).setEnabled(sharedPreferences.getBoolean(key, false));
+                    findPreference(key).callChangeListener(sharedPreferences.getBoolean(key, false));
 
                 } else if (key.equals(getContext().getResources().getString(R.string.table_textsize_key))) {
 
@@ -51,7 +51,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
                 } else if (key.equals(getContext().getResources().getString(R.string.emptycell_display_key))) {
 
-                    findPreference(key).setEnabled(sharedPreferences.getBoolean(key, false));
+                    findPreference(key).callChangeListener(sharedPreferences.getBoolean(key, false));
 
                 }
             }
@@ -66,7 +66,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         findPreference(key).setSummary(sharedPreferences.getString(key, ""));
 
         key = getContext().getResources().getString(R.string.guidelines_key);
-        findPreference(key).setEnabled(sharedPreferences.getBoolean(key, false));
+        findPreference(key).callChangeListener(sharedPreferences.getBoolean(key, false));
 
         key = getContext().getResources().getString(R.string.table_textsize_key);
         findPreference(key).setSummary(sharedPreferences.getString(key, ""));
@@ -78,7 +78,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         findPreference(key).setSummary(sharedPreferences.getString(key, ""));
 
         key = getContext().getResources().getString(R.string.emptycell_display_key);
-        findPreference(key).setEnabled(sharedPreferences.getBoolean(key, false));
+        findPreference(key).callChangeListener(sharedPreferences.getBoolean(key, false));
 
     }
 
