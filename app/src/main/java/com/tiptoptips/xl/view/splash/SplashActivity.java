@@ -1,12 +1,15 @@
 package com.tiptoptips.xl.view.splash;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+import android.widget.TextSwitcher;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatTextView;
 
 import com.tiptoptips.xl.R;
 import com.tiptoptips.xl.utility.SharedPrefs;
@@ -18,9 +21,8 @@ import butterknife.ButterKnife;
 
 public class SplashActivity extends AppCompatActivity {
 
-    @BindView(R.id.splash_text)
-    AppCompatTextView splashText;
-
+    @BindView(R.id.statusTS)
+    TextSwitcher statusTS;
     private boolean doubleBackPressed;
 
     @Override
@@ -30,8 +32,23 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
 
-        splashText.setText(getResources().getString(getResources().getIdentifier("hello",
-                "string", getPackageName())));
+        initialize();
+    }
+
+    public void initialize() {
+
+        statusTS.setFactory(() -> {
+
+            TextView textView = new TextView(SplashActivity.this);
+            textView.setGravity(View.TEXT_ALIGNMENT_CENTER);
+            textView.setTextSize(18);
+            textView.setTextColor(Color.WHITE);
+            return textView;
+        });
+
+        statusTS.setInAnimation(this, android.R.anim.slide_in_left);
+        statusTS.setOutAnimation(this, android.R.anim.slide_out_right);
+        statusTS.setText(getResources().getString(R.string.initializing));
 
         SharedPrefs prefs = new SharedPrefs(this);
         new Handler().postDelayed(() -> {
@@ -51,6 +68,7 @@ public class SplashActivity extends AppCompatActivity {
             finish();
 
         }, 1200);
+
     }
 
     @Override

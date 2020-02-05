@@ -7,6 +7,8 @@
     <color name="bg_line">#E7E7E7</color>
     <color name="bg_color">#FF99DCD7</color>
 
+    <color name="white">#FFFFFF</color>
+
     <color name="cell_background_color">#ffffff</color>
     <color name="cell_text_color">#1f1f1f</color>
     <color name="header_line_color">@android:color/holo_red_light</color>
@@ -23,4 +25,8 @@
     <!-- <color name="cell_line_color">#dbdbdb</color> -->
     <!-- <color name="table_view_selected_background_color">@color/md_selected_background_color</color> -->
     <color name="default_background_color">@color/cell_background_color</color>
+
+    <color name="splash_bg_gradient_start">#472C4F</color>
+    <color name="splash_bg_gradient_end">#1D0A35</color>
+
 </resources>

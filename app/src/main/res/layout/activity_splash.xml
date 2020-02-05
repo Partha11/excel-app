@@ -3,12 +3,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/splash_bg"
     tools:context=".view.splash.SplashActivity">
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/splashLogo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/ic_settings"
+        android:backgroundTint="@color/splash_bg_gradient_start"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="130dp"/>
+
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/splash_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
+        android:text="@string/app_name"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:textColor="@color/white"
+        android:layout_below="@id/splashLogo"
+        android:layout_centerHorizontal="true"/>
+
+
+    <TextSwitcher
+        android:id="@+id/statusTS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:layout_marginBottom="25dp" />
+
 
 </RelativeLayout>

@@ -7,10 +7,12 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -55,6 +57,10 @@ public class LoginActivity extends AppCompatActivity {
     AppCompatTextView signInButton;
     @BindView(R.id.guide_to_login)
     LinearLayout guideToLogin;
+    @BindView(R.id.confirm_email)
+    TextInputEditText confirmEmail;
+    @BindView(R.id.forgotPassword_layout)
+    LinearLayout forgotPasswordLayout;
 
     private LoginViewModel viewModel;
     private ProgressDialog progressDialog;
@@ -83,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.show();
     }
 
-    @OnClick({R.id.login_button, R.id.sign_up_button, R.id.register_button, R.id.sign_in_button})
+    @OnClick({R.id.login_button, R.id.sign_up_button, R.id.register_button, R.id.sign_in_button, R.id.forgotPassword, R.id.send_button})
     public void onViewClicked(View view) {
 
         switch (view.getId()) {
@@ -130,10 +136,7 @@ public class LoginActivity extends AppCompatActivity {
 
             case R.id.sign_up_button:
 
-                loginLayout.setVisibility(View.GONE);
-                registerLayout.setVisibility(View.VISIBLE);
-                guideToLogin.setVisibility(View.VISIBLE);
-                guideToRegister.setVisibility(View.GONE);
+                setLayoutVisibility("register");
                 break;
 
             case R.id.register_button:
@@ -190,10 +193,49 @@ public class LoginActivity extends AppCompatActivity {
 
             case R.id.sign_in_button:
 
+                setLayoutVisibility("login");
+                break;
+
+            case R.id.forgotPassword:
+
+                setLayoutVisibility("forgotPassword");
+                break;
+
+            case R.id.send_button:      //works pending here..................................
+                break;
+
+        }
+    }
+
+    public void setLayoutVisibility(String flag) {
+
+        switch (flag) {
+
+            case "register":
+
+                forgotPasswordLayout.setVisibility(View.GONE);
+                loginLayout.setVisibility(View.GONE);
+                registerLayout.setVisibility(View.VISIBLE);
+                guideToRegister.setVisibility(View.GONE);
+                guideToLogin.setVisibility(View.VISIBLE);
+                break;
+
+            case "login":
+
+                forgotPasswordLayout.setVisibility(View.GONE);
                 registerLayout.setVisibility(View.GONE);
                 loginLayout.setVisibility(View.VISIBLE);
                 guideToLogin.setVisibility(View.GONE);
                 guideToRegister.setVisibility(View.VISIBLE);
+                break;
+
+            case "forgotPassword":
+
+                registerLayout.setVisibility(View.GONE);
+                loginLayout.setVisibility(View.GONE);
+                guideToLogin.setVisibility(View.GONE);
+                guideToRegister.setVisibility(View.GONE);
+                forgotPasswordLayout.setVisibility(View.VISIBLE);
                 break;
         }
     }
@@ -211,4 +253,7 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT).show();
         new Handler().postDelayed(() -> doubleBackPressed = false, 2000);
     }
+
+
 }
+

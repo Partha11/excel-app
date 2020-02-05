@@ -3,44 +3,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/splash_bg"
     tools:context=".view.login.LoginActivity">
 
     <RelativeLayout
+        android:id="@+id/splashHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_marginStart="@dimen/_20sdp"
         android:layout_marginTop="@dimen/_30sdp">
 
-        <View
-            android:id="@+id/bar"
-            android:layout_width="6dp"
-            android:layout_height="@dimen/_50sdp"
-            android:background="@color/colorPrimary"/>
 
-        <LinearLayout
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/splashLogo"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_80sdp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:background="@drawable/ic_settings"
+            android:backgroundTint="@color/splash_bg_gradient_start"
+            android:textColor="@color/colorPrimary" />
+
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_toEndOf="@+id/bar"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_centerInParent="true">
+            android:layout_below="@id/splashLogo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:text="@string/app_name"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold"
+            android:visibility="gone" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/_14sdp"
-                android:textColor="@color/colorPrimary"
-                android:text="@string/welcome" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="@dimen/_12sdp"
-                android:text="@string/sub_heading"/>
-
-        </LinearLayout>
 
     </RelativeLayout>
 
@@ -48,9 +44,10 @@
         android:id="@+id/login_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/splashHeading"
+        android:layout_marginTop="@dimen/_28sdp"
         android:orientation="vertical"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/_80sdp">
+        android:visibility="visible">
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -63,9 +60,12 @@
                 android:id="@+id/login_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:hint="@string/user_email"
                 android:inputType="textEmailAddress"
-                android:textSize="@dimen/_11sdp"/>
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/_11sdp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -74,33 +74,47 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginEnd="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_5sdp">
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_20sdp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
+                android:gravity="center"
                 android:hint="@string/user_password"
-                android:textSize="@dimen/_11sdp"/>
+                android:inputType="textPassword"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/_11sdp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/login_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:background="@drawable/button_bg_white"
+            android:text="@string/user_login"
+            android:textAllCaps="false"
+            android:textColor="@color/splash_bg_gradient_start"
+            android:textSize="@dimen/_11sdp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/forgotPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_7sdp"
-            android:layout_marginEnd="@dimen/_20sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            android:background="@drawable/button_bg"
-            android:textAllCaps="false"
-            android:text="@string/user_login"
+            android:layout_gravity="center"
+            android:padding="@dimen/_11sdp"
+            android:text="@string/forgot_password"
+            android:textColor="@color/white"
             android:textSize="@dimen/_11sdp"
-            android:textColor="@android:color/white" />
+            android:visibility="gone"/>
 
     </LinearLayout>
 
@@ -108,9 +122,9 @@
         android:id="@+id/register_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/splashHeading"
+        android:layout_marginTop="@dimen/_28sdp"
         android:orientation="vertical"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/_80sdp"
         android:visibility="gone">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -124,9 +138,12 @@
                 android:id="@+id/register_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:hint="@string/user_email"
                 android:inputType="textEmailAddress"
-                android:textSize="@dimen/_11sdp"/>
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/_11sdp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -135,16 +152,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginEnd="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_5sdp">
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_20sdp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/register_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
+                android:gravity="center"
                 android:hint="@string/user_password"
-                android:textSize="@dimen/_11sdp"/>
+                android:inputType="textPassword"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/_11sdp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -153,33 +173,36 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginEnd="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_5sdp">
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_20sdp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/register_confirm_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
+                android:gravity="center"
                 android:hint="@string/user_confirm_password"
-                android:textSize="@dimen/_11sdp"/>
+                android:inputType="textPassword"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/_11sdp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/register_button"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_7sdp"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_30sdp"
             android:layout_marginEnd="@dimen/_20sdp"
-            android:layout_marginBottom="@dimen/_5sdp"
-            android:background="@drawable/button_bg"
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:background="@drawable/button_bg_white"
+            android:text="@string/sign_up"
             android:textAllCaps="false"
-            android:text="@string/user_register"
-            android:textSize="@dimen/_11sdp"
-            android:textColor="@android:color/white" />
+            android:textColor="@color/splash_bg_gradient_start"
+            android:textSize="@dimen/_11sdp" />
 
     </LinearLayout>
 
@@ -187,27 +210,29 @@
         android:id="@+id/guide_to_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="24dp"
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/_9sdp"
-            android:text="@string/no_account" />
+            android:text="@string/no_account"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_9sdp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/sign_up_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:text="@string/sign_up"
-            android:textSize="@dimen/_9sdp"
             android:clickable="true"
-            android:textColor="@color/colorPrimary"
-            android:focusable="true" />
+            android:focusable="true"
+            android:text="@string/sign_up"
+            android:textColor="@color/bg_color"
+            android:textSize="@dimen/_9sdp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -215,8 +240,8 @@
         android:id="@+id/guide_to_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="24dp"
         android:orientation="horizontal"
         android:visibility="gone">
@@ -224,19 +249,76 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/_9sdp"
-            android:text="@string/have_account" />
+            android:text="@string/have_account"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_9sdp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/sign_in_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:text="@string/sign_in"
-            android:textSize="@dimen/_9sdp"
             android:clickable="true"
-            android:textColor="@color/colorPrimary"
-            android:focusable="true" />
+            android:focusable="true"
+            android:text="@string/sign_in"
+            android:textColor="@color/bg_color"
+            android:textSize="@dimen/_9sdp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/forgotPassword_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/splashHeading"
+        android:layout_marginTop="@dimen/_35sdp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/confirm_email"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_11sdp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/confirm_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="@string/user_email"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/_11sdp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/send_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:background="@drawable/button_bg_white"
+            android:text="@string/send"
+            android:textAllCaps="false"
+            android:textColor="@color/splash_bg_gradient_start"
+            android:textSize="@dimen/_11sdp" />
+
 
     </LinearLayout>
 
