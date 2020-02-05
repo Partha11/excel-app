@@ -46,15 +46,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/splashHeading"
         android:layout_marginTop="@dimen/_28sdp"
-        android:orientation="vertical"
-        android:visibility="visible">
+        android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginEnd="@dimen/_20sdp">
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:textColorHint="@color/white">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_email"
@@ -64,18 +63,17 @@
                 android:hint="@string/user_email"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"
                 android:textSize="@dimen/_11sdp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginEnd="@dimen/_20sdp">
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:textColorHint="@color/white">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_password"
@@ -85,7 +83,6 @@
                 android:hint="@string/user_password"
                 android:inputType="textPassword"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"
                 android:textSize="@dimen/_11sdp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -114,7 +111,7 @@
             android:text="@string/forgot_password"
             android:textColor="@color/white"
             android:textSize="@dimen/_11sdp"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
     </LinearLayout>
 
@@ -128,11 +125,11 @@
         android:visibility="gone">
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginEnd="@dimen/_20sdp">
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:textColorHint="@color/white">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/register_email"
@@ -142,18 +139,17 @@
                 android:hint="@string/user_email"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"
                 android:textSize="@dimen/_11sdp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginEnd="@dimen/_20sdp">
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:textColorHint="@color/white">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/register_password"
@@ -163,18 +159,17 @@
                 android:hint="@string/user_password"
                 android:inputType="textPassword"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"
                 android:textSize="@dimen/_11sdp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginEnd="@dimen/_20sdp">
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:textColorHint="@color/white">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/register_confirm_password"
@@ -184,7 +179,6 @@
                 android:hint="@string/user_confirm_password"
                 android:inputType="textPassword"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"
                 android:textSize="@dimen/_11sdp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -284,12 +278,12 @@
             android:textSize="@dimen/_11sdp" />
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_20sdp"
-            android:layout_marginEnd="@dimen/_20sdp">
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:textColorHint="@color/white">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/confirm_email"
@@ -299,7 +293,6 @@
                 android:hint="@string/user_email"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"
                 android:textSize="@dimen/_11sdp" />
 
         </com.google.android.material.textfield.TextInputLayout>
