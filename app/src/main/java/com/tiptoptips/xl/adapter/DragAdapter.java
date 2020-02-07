@@ -5,7 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.TextView;
+import android.widget.CompoundButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,18 +24,19 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class DragAdapter extends RecyclerView.Adapter<DragAdapter.ViewHolder> implements DraggableItemAdapter<DragAdapter.ViewHolder> {
 
     private Context context;
-    private List<CheckBoxListItem> list;
+    private List<CheckBoxListItem> itemList;
 
-    public DragAdapter(Context context, List<CheckBoxListItem> list) {
+    public DragAdapter(Context context, List<CheckBoxListItem> itemList) {
 
         setHasStableIds(true);
 
         this.context = context;
-        this.list = list;
+        this.itemList = itemList;
     }
 
     @NonNull
@@ -48,25 +50,42 @@ public class DragAdapter extends RecyclerView.Adapter<DragAdapter.ViewHolder> im
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        holder.modelText.setText(list.get(position).getName());
+        holder.modelText.setText(itemList.get(position).getName());
+
+        if (itemList.get(position).isChecked()) {
+
+            holder.checkBox.setChecked(true);
+
+        } else {
+
+            holder.checkBox.setChecked(false);
+        }
     }
 
     @Override
     public int getItemCount() {
 
-        return list == null ? 0 : list.size();
+        return itemList == null ? 0 : itemList.size();
     }
 
     @Override
     public long getItemId(int position) {
 
-        return list.get(position).getId();
+        return itemList.get(position).getId();
     }
 
     @Override
     public boolean onCheckCanStartDrag(@NonNull ViewHolder holder, int position, int x, int y) {
 
-        return true;
+        View dragHandle = holder.dragHandle;
+
+        int handleWidth = dragHandle.getWidth();
+        int handleHeight = dragHandle.getHeight();
+        int handleLeft = dragHandle.getLeft();
+        int handleTop = dragHandle.getTop();
+
+        return (x >= handleLeft) && (x < handleLeft + handleWidth) &&
+                (y >= handleTop) && (y < handleTop + handleHeight);
     }
 
     @Nullable
@@ -79,8 +98,8 @@ public class DragAdapter extends RecyclerView.Adapter<DragAdapter.ViewHolder> im
     @Override
     public void onMoveItem(int fromPosition, int toPosition) {
 
-        CheckBoxListItem item = list.remove(fromPosition);
-        list.add(toPosition, item);
+        CheckBoxListItem item = itemList.remove(fromPosition);
+        itemList.add(toPosition, item);
     }
 
     @Override
@@ -101,23 +120,50 @@ public class DragAdapter extends RecyclerView.Adapter<DragAdapter.ViewHolder> im
         notifyDataSetChanged();
     }
 
-    class ViewHolder extends AbstractDraggableItemViewHolder {
+    public List<CheckBoxListItem> getAllItems() {
+
+        return itemList;
+    }
+
+    class ViewHolder extends AbstractDraggableItemViewHolder implements CompoundButton.OnCheckedChangeListener {
 
         @BindView(R.id.drag_handle)
         View dragHandle;
         @BindView(R.id.model_check_box)
-        CheckBox modelCheckBox;
+        CheckBox checkBox;
         @BindView(R.id.model_text)
         AppCompatTextView modelText;
         @BindView(R.id.hamburger_button)
         AppCompatImageButton hamburgerButton;
 
-        TextView textView;
-
         ViewHolder(@NonNull View itemView) {
 
             super(itemView);
             ButterKnife.bind(this, itemView);
+
+            checkBox.setOnCheckedChangeListener(this);
+        }
+
+        @OnClick({R.id.model_text, R.id.hamburger_button})
+        public void onViewClicked(View view) {
+
+            switch (view.getId()) {
+
+                case R.id.model_text:
+                    checkBox.setChecked(!checkBox.isChecked());
+                    itemList.get(getAdapterPosition()).setChecked(checkBox.isChecked());
+                    break;
+
+                case R.id.hamburger_button:
+                    Toast.makeText(context, "Menu", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+
+        @Override
+        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+            itemList.get(getAdapterPosition()).setChecked(b);
         }
     }
 }

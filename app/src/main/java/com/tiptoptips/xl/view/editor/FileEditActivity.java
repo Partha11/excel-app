@@ -1,6 +1,7 @@
 package com.tiptoptips.xl.view.editor;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -16,12 +17,15 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.evrencoskun.tableview.TableView;
 import com.evrencoskun.tableview.listener.ITableViewListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.tiptoptips.xl.R;
 import com.tiptoptips.xl.adapter.TableAdapter;
@@ -29,6 +33,7 @@ import com.tiptoptips.xl.dialog.ColumnDialog;
 import com.tiptoptips.xl.dialog.ListDialog;
 import com.tiptoptips.xl.listener.DialogPositionListener;
 import com.tiptoptips.xl.model.Cell;
+import com.tiptoptips.xl.model.CheckBoxListItem;
 import com.tiptoptips.xl.model.ColumnHeader;
 import com.tiptoptips.xl.model.RowHeader;
 import com.tiptoptips.xl.model.UserFile;
@@ -36,6 +41,7 @@ import com.tiptoptips.xl.utility.Constants;
 import com.tiptoptips.xl.utility.SharedPrefs;
 import com.tiptoptips.xl.viewmodel.FileEditViewModel;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -78,7 +84,7 @@ public class FileEditActivity extends AppCompatActivity implements DialogPositio
 
         adapter = new TableAdapter(this);
         prefs = new SharedPrefs(this);
-        fileViewModel = ViewModelProviders.of(this).get(FileEditViewModel.class);
+        fileViewModel = new ViewModelProvider(this).get(FileEditViewModel.class);
 
         tableView.setAdapter(adapter);
         tableView.setTableViewListener(this);
@@ -312,10 +318,12 @@ public class FileEditActivity extends AppCompatActivity implements DialogPositio
         rowAlertBuilder.create().show();
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    @SuppressLint("CheckResult")
     private void checkPermissions() {
 
         RxPermissions permissions = new RxPermissions(this);
-        Disposable disposable = permissions.request(Manifest.permission.READ_EXTERNAL_STORAGE)
+        permissions.request(Manifest.permission.READ_EXTERNAL_STORAGE)
                 .subscribe(granted -> {
 
                     if (granted) {
@@ -429,7 +437,21 @@ public class FileEditActivity extends AppCompatActivity implements DialogPositio
                 case Constants.LIST_COLUMN:
 
                     ListDialog dialog = new ListDialog();
+
+                    Log.d("Data", Objects.requireNonNull(twoDimensionalCell.get(row).get(column).getData()).toString());
+
+                    dialog.updateList(Objects.requireNonNull(twoDimensionalCell.get(row).get(column).getData()).toString());
                     dialog.show(getSupportFragmentManager(), "list");
+                    dialog.setListener(data -> {
+
+                        twoDimensionalCell.get(row).get(column).setData(data);
+
+                        file.getFileData().get(row).put(String.valueOf(columnList.get(column).getData()), data);
+                        fileViewModel.update(file.getFileData(), key, prefs.getUid());
+
+                        adapter.getCellItem(column, row).setData(data);
+                        adapter.notifyDataSetChanged();
+                    });
 
                     break;
             }

@@ -8,23 +8,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="@dimen/_2sdp"
-        android:layout_marginEnd="@dimen/_2sdp"/>
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:background="@drawable/ic_tick"/>
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/list_add_item"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_26sdp"
         android:textSize="@dimen/_10sdp"
+        android:hint="@string/add_item_hint"
         android:layout_below="@id/confirm_list_button"
-        android:layout_marginTop="@dimen/_2sdp"
-        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_toStartOf="@id/add_item_button"
+        android:maxLines="1"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginEnd="@dimen/_5sdp"
-        android:paddingStart="@dimen/_5sdp"
+        android:paddingStart="@dimen/_8sdp"
+        android:paddingTop="@dimen/_3sdp"
+        android:paddingBottom="@dimen/_3sdp"
         android:paddingEnd="0dp"
         android:drawablePadding="@dimen/_5sdp"
         android:background="@drawable/textbox_bg"
         android:drawableStart="@drawable/ic_plus"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/add_item_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/confirm_list_button"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:text="@string/add"
+        android:textAllCaps="false"
+        android:textSize="@dimen/_9sdp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_recycler_view"

@@ -139,6 +139,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="General">General</string>
     <string name="email_address">something@email.com</string>
+    <string name="add_item_hint">Add Item</string>
+    <string name="add">Add</string>
     <string name="initializing">Initializing</string>
     <string name="forgot_password">Forgot the password</string>
     <string name="send">Send</string>

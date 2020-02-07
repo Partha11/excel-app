@@ -30,13 +30,16 @@ public class CheckboxViewHolder extends AbstractViewHolder {
         String object = Objects.requireNonNull(cell.getData()).toString();
         boolean value = object.equals("true");
 
-        if (value) {
+        if (checkBox != null) {
 
-            checkBox.setChecked(true);
+            if (value) {
 
-        } else {
+                checkBox.setChecked(true);
 
-            checkBox.setChecked(false);
+            } else {
+
+                checkBox.setChecked(false);
+            }
         }
     }
 }
