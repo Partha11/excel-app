@@ -43,7 +43,7 @@ public class CellViewHolder extends AbstractViewHolder {
         if (viewType == Constants.TEXT_COLUMN || viewType == Constants.DATE_COLUMN ||
                 viewType == Constants.NUMBER_COLUMN || viewType == Constants.PRICE_COLUMN) {
 
-            String data = "";
+            String data;
 
             if (textView != null) {
 
@@ -51,10 +51,6 @@ public class CellViewHolder extends AbstractViewHolder {
 
                     data = cell.getData().toString();
                     textView.setText(Html.fromHtml(data));
-
-                } else {
-
-                    textView.setText(data);
                 }
             }
 

@@ -2,6 +2,8 @@ package com.tiptoptips.xl.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,8 +103,13 @@ public class TableAdapter extends AbstractTableAdapter<ColumnHeader, RowHeader, 
 
         } else {
 
-            CellViewHolder viewHolder = (CellViewHolder) holder;
-            viewHolder.setCell(cell, holder.getItemViewType());
+            if (cell.getData() != null && !TextUtils.isEmpty(cell.getData().toString())) {
+
+                Log.d("Data", cell.getData().toString() + ": " + columnPosition + ", " + rowPosition);
+
+                CellViewHolder viewHolder = (CellViewHolder) holder;
+                viewHolder.setCell(cell, holder.getItemViewType());
+            }
         }
     }
 

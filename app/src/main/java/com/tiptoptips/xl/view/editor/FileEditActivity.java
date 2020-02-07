@@ -511,7 +511,7 @@ public class FileEditActivity extends AppCompatActivity implements DialogPositio
 
                     numberText.setHint(hint.toString());
                     numberText.setText(Objects.requireNonNull(twoDimensionalCell.get(row).get(column).getData()).toString());
-                    numberText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                    numberText.setInputType(InputType.TYPE_CLASS_NUMBER);
 
                     AlertDialog.Builder numberDialog = new AlertDialog.Builder(this)
                             .setTitle("Edit Field")
