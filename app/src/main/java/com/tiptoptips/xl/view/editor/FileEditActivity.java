@@ -18,14 +18,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.evrencoskun.tableview.TableView;
 import com.evrencoskun.tableview.listener.ITableViewListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.tiptoptips.xl.R;
 import com.tiptoptips.xl.adapter.TableAdapter;
@@ -33,7 +30,6 @@ import com.tiptoptips.xl.dialog.ColumnDialog;
 import com.tiptoptips.xl.dialog.ListDialog;
 import com.tiptoptips.xl.listener.DialogPositionListener;
 import com.tiptoptips.xl.model.Cell;
-import com.tiptoptips.xl.model.CheckBoxListItem;
 import com.tiptoptips.xl.model.ColumnHeader;
 import com.tiptoptips.xl.model.RowHeader;
 import com.tiptoptips.xl.model.UserFile;
@@ -41,7 +37,6 @@ import com.tiptoptips.xl.utility.Constants;
 import com.tiptoptips.xl.utility.SharedPrefs;
 import com.tiptoptips.xl.viewmodel.FileEditViewModel;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,7 +46,6 @@ import java.util.TreeMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.disposables.Disposable;
 
 public class FileEditActivity extends AppCompatActivity implements DialogPositionListener, ITableViewListener {
 
@@ -380,7 +374,15 @@ public class FileEditActivity extends AppCompatActivity implements DialogPositio
                 case Constants.TEXT_COLUMN:
 
                     AppCompatEditText editText = new AppCompatEditText(this);
-                    editText.setHint(columnNames.get(column));
+                    String[] array = columnNames.get(column).split("__");
+                    StringBuilder hint = new StringBuilder();
+
+                    for (int i = 1; i < array.length; i++) {
+
+                        hint.append(array[i]);
+                    }
+
+                    editText.setHint(hint.toString());
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(this)
                             .setTitle("Edit Field")

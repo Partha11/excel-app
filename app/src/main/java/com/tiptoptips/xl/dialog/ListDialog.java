@@ -121,7 +121,7 @@ public class ListDialog extends DialogFragment {
 
         } else {
 
-            if (addItemText.getText() == null) {
+            if (addItemText.getText() == null || addItemText.getText().toString().isEmpty()) {
 
                 addItemText.setError("Required");
 
