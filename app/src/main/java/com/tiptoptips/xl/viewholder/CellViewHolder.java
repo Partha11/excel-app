@@ -40,7 +40,8 @@ public class CellViewHolder extends AbstractViewHolder {
 
     public void setCell(@NonNull Cell cell, int viewType) {
 
-        if (viewType == Constants.TEXT_COLUMN) {
+        if (viewType == Constants.TEXT_COLUMN || viewType == Constants.DATE_COLUMN ||
+                viewType == Constants.NUMBER_COLUMN || viewType == Constants.PRICE_COLUMN) {
 
             String data = "";
 

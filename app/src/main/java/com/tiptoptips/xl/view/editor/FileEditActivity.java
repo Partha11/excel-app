@@ -2,8 +2,10 @@ package com.tiptoptips.xl.view.editor;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -38,6 +40,7 @@ import com.tiptoptips.xl.utility.SharedPrefs;
 import com.tiptoptips.xl.viewmodel.FileEditViewModel;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -369,20 +372,28 @@ public class FileEditActivity extends AppCompatActivity implements DialogPositio
 
         if (file != null) {
 
+            String[] array = columnNames.get(column).split("__");
+            StringBuilder hint = new StringBuilder();
+
+            for (int i = 1; i < array.length; i++) {
+
+                hint.append(array[i]);
+            }
+
             switch (file.getColumnTypes().get(column)) {
 
                 case Constants.TEXT_COLUMN:
 
                     AppCompatEditText editText = new AppCompatEditText(this);
-                    String[] array = columnNames.get(column).split("__");
-                    StringBuilder hint = new StringBuilder();
-
-                    for (int i = 1; i < array.length; i++) {
-
-                        hint.append(array[i]);
-                    }
 
                     editText.setHint(hint.toString());
+                    editText.setText(Objects.requireNonNull(twoDimensionalCell.get(row).get(column).getData()).toString());
+
+                    if (file.getColumnTypes().get(column) == Constants.TEXT_COLUMN) {
+
+                        editText.setInputType(InputType.TYPE_CLASS_TEXT);
+
+                    }
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(this)
                             .setTitle("Edit Field")
@@ -454,6 +465,88 @@ public class FileEditActivity extends AppCompatActivity implements DialogPositio
                         adapter.getCellItem(column, row).setData(data);
                         adapter.notifyDataSetChanged();
                     });
+
+                    break;
+
+                case Constants.DATE_COLUMN:
+
+                    String date = Objects.requireNonNull(twoDimensionalCell.get(row).get(column).getData()).toString();
+                    int year, month, day;
+
+                    if (TextUtils.isEmpty(date)) {
+
+                        Calendar calendar = Calendar.getInstance();
+                        year = calendar.get(Calendar.YEAR);
+                        month = calendar.get(Calendar.MONTH);
+                        day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                    } else {
+
+                        String[] tmp = date.split("-");
+                        day = Integer.parseInt(tmp[0]);
+                        month = Integer.parseInt(tmp[1]);
+                        year = Integer.parseInt(tmp[2]);
+                    }
+
+                    DatePickerDialog picker = new DatePickerDialog(this, (datePicker, y, m, d) -> {
+
+                        String selection = d + "-" + (String.valueOf(m + 1).length() == 1 ? "0" : "") + (m + 1) + "-" + y;
+
+                        twoDimensionalCell.get(row).get(column).setData(selection);
+                        file.getFileData().get(row).put(String.valueOf(columnList.get(column).getData()), selection);
+                        fileViewModel.update(file.getFileData(), key, prefs.getUid());
+
+                        adapter.getCellItem(column, row).setData(selection);
+                        adapter.notifyDataSetChanged();
+
+                    }, year, month, day);
+
+                    picker.show();
+                    break;
+
+                case Constants.NUMBER_COLUMN:
+                case Constants.PRICE_COLUMN:
+
+                    AppCompatEditText numberText = new AppCompatEditText(this);
+
+                    numberText.setHint(hint.toString());
+                    numberText.setText(Objects.requireNonNull(twoDimensionalCell.get(row).get(column).getData()).toString());
+                    numberText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+
+                    AlertDialog.Builder numberDialog = new AlertDialog.Builder(this)
+                            .setTitle("Edit Field")
+                            .setView(numberText)
+                            .setPositiveButton("Set", (dialogInterface, i) -> {
+
+                                if (numberText.getText() != null && !TextUtils.isEmpty(numberText.getText().toString())) {
+
+                                    String temp = numberText.getText().toString();
+                                    twoDimensionalCell.get(row).get(column).setData(temp);
+
+                                    file.getFileData().get(row).put(String.valueOf(columnList.get(column).getData()), temp.trim());
+                                    fileViewModel.update(file.getFileData(), key, prefs.getUid());
+
+                                    adapter.getCellItem(column, row).setData(temp);
+                                    adapter.notifyDataSetChanged();
+
+                                } else {
+
+                                    numberText.setError("Required");
+                                }
+                            })
+                            .setNegativeButton("Cancel", (dialogInterface, i) -> dialogInterface.dismiss());
+
+                    numberDialog.create().show();
+
+                    FrameLayout.LayoutParams numberParams = new FrameLayout.LayoutParams(
+                            FrameLayout.LayoutParams.MATCH_PARENT,
+                            FrameLayout.LayoutParams.WRAP_CONTENT
+                    );
+
+                    numberParams.setMargins((int) getResources().getDimension(R.dimen._15sdp),
+                            (int) getResources().getDimension(R.dimen._15sdp),
+                            (int) getResources().getDimension(R.dimen._15sdp), 0);
+                    numberText.setLayoutParams(numberParams);
 
                     break;
             }
